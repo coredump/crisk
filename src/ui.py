@@ -36,6 +36,18 @@ class BasicsView(ProxySlaveDelegate):
 #        session.commit()
         pass
         
+class InventoryView(ProxySlaveDelegate):
+    def __init__(self):
+        widget_list = ['invent_list']
+        try:
+            invent_model = Asset.get_all()
+        except:
+            invent_model = None        
+        
+        ProxySlaveDelegate.__init__(self, invent_model, widget_list, 
+                                    gladefile = 'ui',
+                                    toplevel_name = 'InventoryWindow')
+        
 class App(GladeDelegate):
     
     db_file = None
@@ -87,6 +99,9 @@ class App(GladeDelegate):
             tree.select(self.first)
         if index == 1:
             slave = BasicsView() 
+            self.attach_slave('placeholder', slave)
+        if index == 2:
+            slave = InventoryView()
             self.attach_slave('placeholder', slave)
                         
     def on_about__activate(self, *args):
