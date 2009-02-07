@@ -13,24 +13,29 @@ from kiwi.ui.dialogs import error, warning, yesno, save, messagedialog
 from kiwi.ui.dialogs import open as open_dialog
 from kiwi.ui.objectlist import Column
 from kiwi.ui.widgets import textview, label, entry
-from kiwi.ui.delegates import GladeDelegate, GladeSlaveDelegate
+from kiwi.ui.delegates import GladeDelegate, ProxySlaveDelegate
 
 class Step:
     def __init__(self, name, idx):
         self.name = name
         self.idx = idx
 
-class BasicsView(GladeSlaveDelegate):
-    def __init__(self):
-        GladeSlaveDelegate.__init__(self, 'ui', toplevel_name = 'BasicsWindow')
+class BasicsView(ProxySlaveDelegate):
+    def __init__(self):        
         widget_list = ['name', 'location', 'initial_date', 'scope']
         try:
             basics_model = Basic.get(1)
         except:
             basics_model = None
-        print basics_model
-        self.proxy = self.add_proxy(basics_model, widget_list)
-
+            
+        ProxySlaveDelegate.__init__(self, basics_model, widget_list, 
+                                    gladefile = 'ui', 
+                                    toplevel_name = 'BasicsWindow')
+    def proxy_updated(self, *args):
+#        print args
+#        session.commit()
+        pass
+        
 class App(GladeDelegate):
     
     db_file = None
@@ -40,7 +45,7 @@ class App(GladeDelegate):
         # Criando a tree inicial
 
         GladeDelegate.__init__(self, "ui", toplevel_name = 'MainWindow', 
-                               delete_handler = gtk.main_quit)        
+                               delete_handler = self.on_exit__activate)        
         self.tree = self.get_widget('maintree')        
         tree = self.tree
         cols =  [ Column('name', title='Step', data_type = str, expand = True) ]
@@ -127,6 +132,7 @@ class App(GladeDelegate):
             res = error("An error has ocurred", info.__str__())
             
     def on_exit__activate(self, *args):
+        session.commit()
         gtk.main_quit()
         
 app = App()
