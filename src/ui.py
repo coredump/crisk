@@ -21,17 +21,15 @@ class Step:
         self.idx = idx
 
 class BasicsView(GladeSlaveDelegate):
-    def __init__(self):       
+    def __init__(self):
         GladeSlaveDelegate.__init__(self, 'ui', toplevel_name = 'BasicsWindow')
         widget_list = ['name', 'location', 'initial_date', 'scope']
         try:
             basics_model = Basic.get(1)
         except:
-            print 'exception'
             basics_model = None
         print basics_model
-
-        self.add_proxy(basics_model, widget_list)
+        self.proxy = self.add_proxy(basics_model, widget_list)
 
 class App(GladeDelegate):
     
@@ -101,6 +99,7 @@ class App(GladeDelegate):
             db_url = 'sqlite:///%s' % selected_file
             metadata.bind = db_url
             metadata.bind.has_table('model_asset')
+            setup_all()
             self.db_file = selected_file
             self.tree.select(self.first)
         except Exception, info:
@@ -117,16 +116,18 @@ class App(GladeDelegate):
         try:
             db_url = 'sqlite:///%s' % new_file
             metadata.bind = db_url
-            metadata.bind.echo = False
+            metadata.bind.echo = True
             setup_all()
             create_all()
             tmp = Basic()
-            session.flush()
+            session.commit()
             self.db_file = new_file
             self.tree.select(self.first)
         except Exception, info:
             res = error("An error has ocurred", info.__str__())
             
+    def on_exit__activate(self, *args):
+        gtk.main_quit()
         
 app = App()
 app.show_and_loop()
