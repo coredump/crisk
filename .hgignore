@@ -1,4 +1,5 @@
 syntax: glob
+*.crisk
 .settings\org.eclipse.core.resources.prefs
 src\model.pyc
 glob:src/crisk/__init__.pyc
