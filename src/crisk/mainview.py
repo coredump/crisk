@@ -39,8 +39,6 @@ class MainView(GladeDelegate):
        
         # Criando a tree inicial
 
-        
-
         GladeDelegate.__init__(self, "ui", toplevel_name = 'MainWindow', 
                                delete_handler = self.on_exit__activate)        
         self.tree = self.get_widget('maintree')        
@@ -63,7 +61,8 @@ class MainView(GladeDelegate):
             self.open_or_new()   
     
     def open_or_new(self):
-        result = yesno('Choose \'Yes\' to open a previous work, or\n' + 
+        result = yesno('Do you want to open a previous file?\n\n' + 
+                       'Choose \'Yes\' to open a previous work, or\n' + 
                        'choose \'No\' if you want to create a new DB') 
         if result == gtk.RESPONSE_YES:
             self.on_open__activate()
@@ -86,7 +85,7 @@ class MainView(GladeDelegate):
             slave = BasicsView() 
             self.attach_slave('placeholder', slave)
         if index == 2:
-            slave = InventoryView()
+            slave = InventoryView(parent = self)
             self.attach_slave('placeholder', slave)
                         
     def on_about__activate(self, *args):

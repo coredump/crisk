@@ -254,15 +254,23 @@
         </child>
     </widget>
     <widget class="GtkWindow" id="InventoryAddWindow">
-        <property name="default_height">250</property>
-        <property name="default_width">440</property>
-        <property name="height_request">200</property>
-        <property name="width_request">300</property>
+        <property name="allow_grow">False</property>
+        <property name="default_height">400</property>
+        <property name="default_width">600</property>
+        <property name="destroy_with_parent">True</property>
+        <property name="height_request">400</property>
+        <property name="resizable">False</property>
+        <property name="skip_pager_hint">True</property>
+        <property name="skip_taskbar_hint">True</property>
+        <property name="title" context="yes" translatable="yes">Add asset to inventory</property>
+        <property name="width_request">600</property>
+        <property name="window_position">center</property>
         <child>
             <widget class="GtkVBox" id="vbox4">
                 <property name="visible">True</property>
                 <child>
                     <widget class="GtkHBox" id="hbox6">
+                        <property name="border_width">5</property>
                         <property name="visible">True</property>
                         <child>
                             <widget class="ProxyLabel" id="kiwilabel5">
@@ -271,7 +279,6 @@
                                 <property name="sizegroup">sizegroup5</property>
                                 <property name="visible">True</property>
                                 <property name="xalign">0.0</property>
-                                <property name="xpad">5</property>
                             </widget>
                             <packing>
                                 <property name="expand">False</property>
@@ -297,6 +304,7 @@
                 </child>
                 <child>
                     <widget class="GtkHBox" id="hbox7">
+                        <property name="border_width">5</property>
                         <property name="visible">True</property>
                         <child>
                             <widget class="ProxyLabel" id="kiwilabel6">
@@ -305,7 +313,6 @@
                                 <property name="sizegroup">sizegroup5</property>
                                 <property name="visible">True</property>
                                 <property name="xalign">0.0</property>
-                                <property name="xpad">5</property>
                                 <property name="yalign">0.0</property>
                             </widget>
                             <packing>
@@ -333,6 +340,7 @@
                 </child>
                 <child>
                     <widget class="GtkHBox" id="hbox8">
+                        <property name="border_width">5</property>
                         <property name="visible">True</property>
                         <child>
                             <widget class="ProxyLabel" id="kiwilabel7">
@@ -341,7 +349,6 @@
                                 <property name="sizegroup">sizegroup5</property>
                                 <property name="visible">True</property>
                                 <property name="xalign">0.0</property>
-                                <property name="xpad">5</property>
                             </widget>
                             <packing>
                                 <property name="expand">False</property>
@@ -351,9 +358,9 @@
                         <child>
                             <widget class="ProxyEntry" id="invent_value">
                                 <property name="data_type">currency</property>
+                                <property name="is_focus">True</property>
                                 <property name="mandatory">True</property>
                                 <property name="model_attribute">invent_value</property>
-                                <property name="sizegroup">sizegroup6</property>
                                 <property name="visible">True</property>
                                 <property name="xalign">1.0</property>
                             </widget>
@@ -369,6 +376,7 @@
                 </child>
                 <child>
                     <widget class="GtkHBox" id="hbox9">
+                        <property name="border_width">5</property>
                         <property name="visible">True</property>
                         <child>
                             <widget class="ProxyLabel" id="kiwilabel8">
@@ -377,7 +385,6 @@
                                 <property name="sizegroup">sizegroup5</property>
                                 <property name="visible">True</property>
                                 <property name="xalign">0.0</property>
-                                <property name="xpad">5</property>
                                 <property name="yalign">0.0</property>
                             </widget>
                             <packing>
@@ -397,6 +404,38 @@
                     </widget>
                     <packing>
                         <property name="position">3</property>
+                    </packing>
+                </child>
+                <child>
+                    <widget class="GtkHBox" id="hbox10">
+                        <property name="border_width">5</property>
+                        <property name="visible">True</property>
+                        <child>
+                            <widget class="ProxyButton" id="invent_save_button">
+                                <property name="data_type">str</property>
+                                <property name="label">gtk-save</property>
+                                <property name="model_attribute">invent_save_button</property>
+                                <property name="use_stock">True</property>
+                                <property name="visible">True</property>
+                            </widget>
+                        </child>
+                        <child>
+                            <widget class="ProxyButton" id="invent_cancel_button">
+                                <property name="data_type">str</property>
+                                <property name="label">gtk-cancel</property>
+                                <property name="model_attribute">invent_cancel_button</property>
+                                <property name="use_stock">True</property>
+                                <property name="visible">True</property>
+                            </widget>
+                            <packing>
+                                <property name="position">1</property>
+                            </packing>
+                        </child>
+                    </widget>
+                    <packing>
+                        <property name="expand">False</property>
+                        <property name="padding">5</property>
+                        <property name="position">4</property>
                     </packing>
                 </child>
             </widget>

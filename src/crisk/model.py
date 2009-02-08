@@ -5,8 +5,7 @@ import datetime
 from elixir import *
 
 class Basic(Entity):
-    
-    using_options(autosetup = True)
+    using_options(autosetup = True, tablename = 'basic')
     
     name = Field(Unicode(64))
     location = Field(Unicode(64))
@@ -14,14 +13,18 @@ class Basic(Entity):
     scope = Field(UnicodeText)
     
 class Asset(Entity):
+    using_options(autosetup = True, tablename = 'asset')
+    
     
     name = Field(Unicode(64))
     description = Field(UnicodeText)
-    value = Field(UnicodeText)
+    __value = Field(UnicodeText)
     
-    vulns = ManyToMany('Vulnerabilities')
+    vulns = ManyToMany('Vulnerability')
     
-class Vulnerabilities(Entity):
+    
+class Vulnerability(Entity):
+    using_options(autosetup = True, tablename = 'vulnerability')
     
     description = Field(Unicode(256))
     severity = Field(Numeric)
@@ -31,8 +34,9 @@ class Vulnerabilities(Entity):
     threats = ManyToMany('Threat')
     
 class Threat(Entity):
+    using_options(autosetup = True, tablename = 'threat')
     
     name = Field(Unicode(64))
     description = Field(Unicode(256))
     
-    vulns = ManyToMany('Vulnerabilities')
+    vulns = ManyToMany('Vulnerability')
