@@ -18,9 +18,17 @@ class Asset(Entity):
     
     name = Field(Unicode(64))
     description = Field(UnicodeText)
-    __value = Field(UnicodeText)
+    __value = Field(Numeric)
     
     vulns = ManyToMany('Vulnerability')
+    
+    def set_value(self, value):
+        self.__value = int(value)
+
+    def get_value(self):
+        return self.__value
+    
+    value = property(get_value, set_value)
     
     
 class Vulnerability(Entity):

@@ -365,6 +365,7 @@
                                 <property name="xalign">1.0</property>
                             </widget>
                             <packing>
+                                <property name="expand">False</property>
                                 <property name="position">1</property>
                             </packing>
                         </child>
@@ -412,6 +413,7 @@
                         <property name="visible">True</property>
                         <child>
                             <widget class="ProxyButton" id="invent_save_button">
+                                <property name="can_default">True</property>
                                 <property name="data_type">str</property>
                                 <property name="label">gtk-save</property>
                                 <property name="model_attribute">invent_save_button</property>
@@ -466,6 +468,7 @@
                                 <property name="visible">True</property>
                                 <child>
                                     <widget class="ProxyButton" id="button_add">
+                                        <property name="can_default">True</property>
                                         <property name="data_type">str</property>
                                         <property name="label">gtk-add</property>
                                         <property name="model_attribute">button_add</property>
@@ -490,6 +493,19 @@
                                         <property name="expand">False</property>
                                         <property name="fill">False</property>
                                         <property name="position">1</property>
+                                    </packing>
+                                </child>
+                                <child>
+                                    <widget class="ProxyButton" id="button_edit">
+                                        <property name="data_type">str</property>
+                                        <property name="label">gtk-edit</property>
+                                        <property name="model_attribute">button_edit</property>
+                                        <property name="use_stock">True</property>
+                                        <property name="visible">True</property>
+                                    </widget>
+                                    <packing>
+                                        <property name="expand">False</property>
+                                        <property name="position">2</property>
                                     </packing>
                                 </child>
                             </widget>
