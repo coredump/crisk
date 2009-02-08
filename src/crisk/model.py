@@ -17,7 +17,7 @@ class Asset(Entity):
     
     name = Field(Unicode(64))
     description = Field(UnicodeText)
-    value = Field(Numeric)
+    value = Field(UnicodeText)
     
     vulns = ManyToMany('Vulnerabilities')
     
