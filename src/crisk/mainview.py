@@ -19,6 +19,7 @@ from kiwi.ui.delegates import GladeDelegate, GladeSlaveDelegate, ProxySlaveDeleg
 from model import *
 from basicsview import BasicsView
 from inventoryview import InventoryView
+from vulnerabilitiesview import VulnerabilitiesView
 
 # Adicionando paths para achar os resources
 
@@ -86,6 +87,9 @@ class MainView(GladeDelegate):
             self.attach_slave('placeholder', slave)
         if index == 2:
             slave = InventoryView(parent = self)
+            self.attach_slave('placeholder', slave)
+        if index == 3:
+            slave = VulnerabilitiesView(parent = self)
             self.attach_slave('placeholder', slave)
                         
     def on_about__activate(self, *args):

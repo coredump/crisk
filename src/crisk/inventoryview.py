@@ -11,9 +11,10 @@ from model import *
 from elixir import *
 
 class vuln:
-    def __init__(self, name, state = False):
+    def __init__(self, name, state = False, id = None):
         self.description = name
         self.state = state
+        self.id = id
 
 class TempModel(Model):
     def __init__(self, name = None, description = None, value = 0, vulns = None):
@@ -49,15 +50,18 @@ class InventoryAddEdit(ProxyDelegate):
         
         all_vulns = Vulnerability.query().all()
         
-        if self.__edit:
-            pass
+        if self.__edit is not None:
+            edit = self.__edit
+            for item in all_vulns:
+                if item in edit.vulns:
+                    vuln_to_add = vuln(item.description, True, id = item.id)
+                else:
+                    vuln_to_add = vuln(item.description, id = item.id)
+                self.tree.append(vuln_to_add)
         else:
             for item in all_vulns:
-                vuln_to_add = vuln(item.description)
+                vuln_to_add = vuln(item.description, id = item.id)
                 self.tree.append(vuln_to_add)
-    
-#    def proxy_updated(self, *args):
-#        print args
 #        
     def dialog_delete(self, *args):
         self.hide_and_quit()
@@ -68,11 +72,17 @@ class InventoryAddEdit(ProxyDelegate):
             asset = Asset(name = model.invent_name,
                           description = model.invent_description,
                           value = model.invent_value)
+
         else:
             asset = self.__edit
             asset.name = model.invent_name
             asset.description = model.invent_description
             asset.value = model.invent_value
+
+        for item in self.tree:
+            if item.state:
+                checked_vuln = Vulnerability.get(item.id)
+                asset.vulns.append(checked_vuln)
             
         session.commit()
         self.hide_and_quit()

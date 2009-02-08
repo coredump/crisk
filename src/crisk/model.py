@@ -20,7 +20,7 @@ class Asset(Entity):
     description = Field(UnicodeText)
     __value = Field(Numeric)
     
-    vulns = ManyToMany('Vulnerability')
+    vulns = ManyToMany('Vulnerability', ondelete = 'cascade')
     
     def set_value(self, value):
         self.__value = int(value)
@@ -38,8 +38,8 @@ class Vulnerability(Entity):
     severity = Field(Numeric)
     chance = Field(Numeric)
     
-    assets = ManyToMany('Asset')
-    threats = ManyToMany('Threat')
+    assets = ManyToMany('Asset', ondelete = 'cascade')
+    threats = ManyToMany('Threat', ondelete = 'cascade')
     
 class Threat(Entity):
     using_options(autosetup = True, tablename = 'threat')
@@ -47,4 +47,4 @@ class Threat(Entity):
     name = Field(Unicode(64))
     description = Field(Unicode(256))
     
-    vulns = ManyToMany('Vulnerability')
+    vulns = ManyToMany('Vulnerability', ondelete = 'cascade')
