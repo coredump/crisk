@@ -59,6 +59,8 @@ from basicsview import BasicsView
 from inventoryview import InventoryView
 from vulnerabilitiesview import VulnerabilitiesView
 
+from crisk.reports.invent_report import InventoryReport, PDFGenerator
+
 # Adicionando paths para achar os resources
 
 cwd = os.getcwd()
@@ -79,7 +81,7 @@ class MainView(GladeDelegate):
         # Criando a tree inicial
 
         GladeDelegate.__init__(self, "ui", toplevel_name = 'MainWindow', 
-                               delete_handler = self.on_quit__activate)        
+                               delete_handler = self.on_exit__activate)        
         self.tree = self.get_widget('maintree')        
         tree = self.tree
         cols =  [ Column('name', title='Step', data_type = str, expand = True) ]
@@ -91,9 +93,9 @@ class MainView(GladeDelegate):
         tree.append(basics, Step('Inventory', 2))
         tree.append(basics, Step('Vulnerabilities', 3))
         tree.expand(basics)
-        results = tree.append(None, Step('Results', 4))
-        tree.append(results, Step('Inventory Report', 5))
-        tree.expand(results)
+#        results = tree.append(None, Step('Results', 4))
+#        tree.append(results, Step('Inventory Report', 5))
+#        tree.expand(results)
 #        tree.select(self.first)
 
         if self.db_file is None:
@@ -146,6 +148,11 @@ class MainView(GladeDelegate):
         x = diag.run()
         diag.hide()
                
+    def on_inventory_report__activate(self, *args):
+        assets = Asset.query().all()
+        report = InventoryReport(queryset = assets)
+        report.generate_by(PDFGenerator, filename = 'inventory.pdf')
+        
     def on_open__activate(self, *args):
         filter = gtk.FileFilter()
         filter.add_pattern('*.crisk')
@@ -186,6 +193,6 @@ class MainView(GladeDelegate):
         except Exception, info:
             res = error("An error has ocurred", info.__str__())
             
-    def on_quit__activate(self, *args):
+    def on_exit__activate(self, *args):
         session.commit()
         gtk.main_quit()

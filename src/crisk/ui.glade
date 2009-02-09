@@ -28,20 +28,7 @@
                         <property name="stock_id">gtk-about</property>
                     </widget>
                 </child>
-                <child>
-                    <widget class="GtkAction" id="copy">
-                        <property name="name">copy</property>
-                        <property name="short_label" translatable="yes">Copy</property>
-                        <property name="stock_id">gtk-copy</property>
-                    </widget>
-                </child>
-                <child>
-                    <widget class="GtkAction" id="cut">
-                        <property name="name">cut</property>
-                        <property name="label" translatable="yes">C_ut</property>
-                        <property name="stock_id">gtk-cut</property>
-                    </widget>
-                </child>
+        
                 <child>
                     <widget class="GtkAction" id="file">
                         <property name="name">file</property>
@@ -52,8 +39,8 @@
                 <child>
                     <widget class="GtkAction" id="help">
                         <property name="name">help</property>
-                        <property name="label" translatable="yes"></property>
-                        <property name="stock_id">gtk-help</property>
+                        <property name="label" translatable="yes">_Help</property>
+                        <property name="short_label" translatable="yes">Help</property>
                     </widget>
                 </child>
                 <child>
@@ -68,30 +55,29 @@
                         <property name="stock_id">gtk-open</property>
                     </widget>
                 </child>
+        
                 <child>
-                    <widget class="GtkAction" id="paste">
-                        <property name="name">paste</property>
-                        <property name="stock_id">gtk-paste</property>
-                        <property name="accelerator">&lt;Control&gt;p</property>
-                    </widget>
-                </child>
-                <child>
-                    <widget class="GtkAction" id="quit">
-                        <property name="name">quit</property>
-                        <property name="label" translatable="yes"></property>
+                    <widget class="GtkAction" id="exit">
+                        <property name="name">exit</property>
                         <property name="stock_id">gtk-quit</property>
                     </widget>
                 </child>
                 <child>
                     <widget class="GtkAction" id="tools">
                         <property name="name">tools</property>
-                        <property name="label" translatable="yes">Tools</property>
+                        <property name="label" translatable="yes">_Tools</property>
+                    </widget>
+                </child>
+                <child>
+                    <widget class="GtkAction" id="inventory_report">
+                        <property name="name">inventory_report</property>
+                        <property name="label" translatable="yes">_Inventory Report</property>
                     </widget>
                 </child>
             </widget>
         </child>
         <ui id="initial-state"><![CDATA[<ui>
-<menubar action="menubar1" name="menubar1"><menu action="file" name="file"><menuitem action="open" name="open"/><menuitem action="new" name="new"/><separator/><menuitem action="exit" name="exit"/></menu><menu action="tools" name="tools"/><menu action="help" name="help"><menuitem action="about" name="about"/></menu></menubar>
+<menubar action="menubar1" name="menubar1"><menu action="file" name="file"><menuitem action="open" name="open"/><menuitem action="new" name="new"/><separator/><menuitem action="exit" name="exit"/></menu><menu action="tools" name="tools"><menuitem action="inventory_report" name="inventory_report"/></menu><menu action="help" name="help"><menuitem action="about" name="about"/></menu></menubar>
 </ui>]]></ui>
     </widget>
     <widget class="GtkWindow" id="BasicsWindow">
