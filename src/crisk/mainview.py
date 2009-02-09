@@ -1,4 +1,22 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright 2009 José de Paula Eufrásio Júnior <jose.junior@gmail.com>
+
+#    This file is part of Crisk.
+#
+#    Crisk is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    Crisk is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 import gtk
 import pygtk
@@ -13,6 +31,26 @@ from kiwi.ui.objectlist import Column, ObjectList
 from kiwi.currency import currency
 from kiwi.ui.widgets import textview, label, entry
 from kiwi.ui.delegates import GladeDelegate, GladeSlaveDelegate, ProxySlaveDelegate
+
+__version__ = '0.1'
+__license__ = """
+Copyright 2009 José de Paula Eufrásio Júnior <jose.junior@gmail.com>
+
+This file is part of Crisk.
+
+Crisk is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Crisk is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+"""
 
 # Pedacos do programa
 
@@ -41,7 +79,7 @@ class MainView(GladeDelegate):
         # Criando a tree inicial
 
         GladeDelegate.__init__(self, "ui", toplevel_name = 'MainWindow', 
-                               delete_handler = self.on_exit__activate)        
+                               delete_handler = self.on_quit__activate)        
         self.tree = self.get_widget('maintree')        
         tree = self.tree
         cols =  [ Column('name', title='Step', data_type = str, expand = True) ]
@@ -66,11 +104,15 @@ class MainView(GladeDelegate):
                        'Choose \'Yes\' to open a previous work, or\n' + 
                        'choose \'No\' if you want to create a new DB') 
         if result == gtk.RESPONSE_YES:
-            self.on_open__activate()
+            res = self.on_open__activate()
+            if res is None:
+                sys.exit()
         elif result == gtk.RESPONSE_NO:
-            self.on_new__activate()
+            res = self.on_new__activate()
+            if res is None:
+                sys.exit()
         else:
-            gtk.main_quit()
+            sys.exit()
     
     def check_and_detach(self):
         if self.get_slave('placeholder') is not None:
@@ -94,6 +136,13 @@ class MainView(GladeDelegate):
                         
     def on_about__activate(self, *args):
         diag = gtk.AboutDialog()
+        diag.set_name('Crisk')
+        diag.set_version(__version__)
+        diag.set_copyright('Copyright 2009 - José de Paula E. Júnior')
+        diag.set_authors(['José de Paula E. Júnior <jose.junior@gmail.com>'])
+        diag.set_comments('A simple risk management tool')
+        diag.set_website('https://www.assembla.com/spaces/crisk')
+        diag.set_license(__license__)
         x = diag.run()
         diag.hide()
                
@@ -102,7 +151,7 @@ class MainView(GladeDelegate):
         filter.add_pattern('*.crisk')
         selected_file = open_dialog('Open', filter = filter)
         if selected_file is None:
-            return
+            return None
         try:
             db_url = 'sqlite:///%s' % selected_file
             metadata.bind = db_url
@@ -111,15 +160,15 @@ class MainView(GladeDelegate):
             setup_all()
             self.db_file = selected_file
             self.tree.select(self.first)
-            print self.db_file
+            return True
         except Exception, info:
             error('Error opening database', str(info))
         
     def on_new__activate(self, *args):
         new_file = save('Save')        
         if new_file is None:
-            return
-        
+            return None
+
         if not new_file.endswith('.crisk'):
             new_file = new_file + '.crisk'
         
@@ -133,9 +182,10 @@ class MainView(GladeDelegate):
             session.commit()
             self.db_file = new_file
             self.tree.select(self.first)
+            return True
         except Exception, info:
             res = error("An error has ocurred", info.__str__())
             
-    def on_exit__activate(self, *args):
+    def on_quit__activate(self, *args):
         session.commit()
         gtk.main_quit()

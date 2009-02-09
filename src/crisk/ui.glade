@@ -43,21 +43,6 @@
                     </widget>
                 </child>
                 <child>
-                    <widget class="GtkAction" id="edit">
-                        <property name="name">edit</property>
-                        <property name="label" translatable="yes">_Edit</property>
-                        <property name="short_label" translatable="yes">Edit</property>
-                    </widget>
-                </child>
-                <child>
-                    <widget class="GtkAction" id="exit">
-                        <property name="name">exit</property>
-                        <property name="label" translatable="yes">_Quit</property>
-                        <property name="short_label" translatable="yes">Quit</property>
-                        <property name="stock_id">gtk-quit</property>
-                    </widget>
-                </child>
-                <child>
                     <widget class="GtkAction" id="file">
                         <property name="name">file</property>
                         <property name="label" translatable="yes">_File</property>
@@ -67,8 +52,8 @@
                 <child>
                     <widget class="GtkAction" id="help">
                         <property name="name">help</property>
-                        <property name="label" translatable="yes">_Help</property>
-                        <property name="short_label" translatable="yes">Help</property>
+                        <property name="label" translatable="yes"></property>
+                        <property name="stock_id">gtk-help</property>
                     </widget>
                 </child>
                 <child>
@@ -91,6 +76,13 @@
                     </widget>
                 </child>
                 <child>
+                    <widget class="GtkAction" id="quit">
+                        <property name="name">quit</property>
+                        <property name="label" translatable="yes"></property>
+                        <property name="stock_id">gtk-quit</property>
+                    </widget>
+                </child>
+                <child>
                     <widget class="GtkAction" id="tools">
                         <property name="name">tools</property>
                         <property name="label" translatable="yes">Tools</property>
@@ -99,7 +91,7 @@
             </widget>
         </child>
         <ui id="initial-state"><![CDATA[<ui>
-<menubar action="menubar1" name="menubar1"><menu action="file" name="file"><menuitem action="open" name="open"/><menuitem action="new" name="new"/><separator/><menuitem action="exit" name="exit"/></menu><menu action="edit" name="edit"><menuitem action="copy" name="copy"/><menuitem action="cut" name="cut"/><menuitem action="paste" name="paste"/></menu><menu action="tools" name="tools"/><menu action="help" name="help"><menuitem action="about" name="about"/></menu></menubar>
+<menubar action="menubar1" name="menubar1"><menu action="file" name="file"><menuitem action="open" name="open"/><menuitem action="new" name="new"/><separator/><menuitem action="exit" name="exit"/></menu><menu action="tools" name="tools"/><menu action="help" name="help"><menuitem action="about" name="about"/></menu></menubar>
 </ui>]]></ui>
     </widget>
     <widget class="GtkWindow" id="BasicsWindow">
