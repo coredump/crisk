@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright 2009 José de Paula Eufrásio Júnior <jose.junior@gmail.com>
+# Copyright 2009 José de Paula Eufrásio Júnior
 
 #    This file is part of Crisk.
 #
@@ -18,22 +18,30 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-from kiwi.ui.delegates import ProxySlaveDelegate
+from distutils.core import setup
+import py2exe
 
-from model import *
+setup(
+    name = 'crisk',
+    description = 'Simple Risk Management Tool',
+    version = '0.1',
 
-class BasicsView(ProxySlaveDelegate):
-    def __init__(self):        
-        widget_list = ['name', 'location', 'initial_date', 'scope']
-        try:
-            basics_model = Basic.get(1)
-        except:
-            basics_model = None
-            
-        ProxySlaveDelegate.__init__(self, basics_model, widget_list, 
-                                    gladefile = 'ui', 
-                                    toplevel_name = 'BasicsWindow')
-    def proxy_updated(self, *args):
-#        print args
-#        session.commit()
-        pass
+    windows = [
+                  {
+                      'script': 'ui.py',
+                      'icon_resources': [(1, "handytool.ico")],
+                  }
+              ],
+
+    options = {
+                  'py2exe': {
+                      'packages':'encodings',
+                      'includes': 'cairo, pango, pangocairo, atk, gobject, geraldo, elixir',
+                  }
+              },
+
+    data_files=[
+                   'ui.glade',
+                   'COPYING'
+               ]
+)
