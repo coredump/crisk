@@ -63,9 +63,10 @@ from crisk.reports.invent_report import InventoryReport, PDFGenerator
 
 # Adicionando paths para achar os resources
 
-cwd = os.getcwd()
-standalone_path = os.path.join(cwd, 'crisk')
-kiwi.environ.environ.add_resource('glade', standalone_path)
+if not hasattr(sys, 'frozen'):
+    cwd = os.getcwd()
+    standalone_path = os.path.join(cwd, 'crisk')
+    kiwi.environ.environ.add_resource('glade', standalone_path)
 
 class Step:
     def __init__(self, name, idx):

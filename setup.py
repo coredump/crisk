@@ -20,6 +20,9 @@
 
 from distutils.core import setup
 import py2exe
+import sys
+
+sys.path.append('src/')
 
 setup(
     name = 'crisk',
@@ -28,20 +31,20 @@ setup(
 
     windows = [
                   {
-                      'script': 'ui.py',
-                      'icon_resources': [(1, "handytool.ico")],
+                      'script': 'src/crisk.py',
+                      'icon' : 'criskicon.ico'
                   }
               ],
 
     options = {
                   'py2exe': {
-                      'packages':'encodings',
+                      'packages':'encodings, crisk, sqlalchemy.databases.sqlite',
                       'includes': 'cairo, pango, pangocairo, atk, gobject, geraldo, elixir',
                   }
               },
 
     data_files=[
-                   'ui.glade',
-                   'COPYING'
+                   ('glade', ['src/crisk/ui.glade']),
+                   'src/COPYING'
                ]
 )
