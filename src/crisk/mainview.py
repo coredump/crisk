@@ -16,7 +16,7 @@
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Crisk.  If not, see <http://www.gnu.org/licenses/>.
 
 import gtk
 import pygtk
@@ -32,8 +32,6 @@ from kiwi.currency import currency
 from kiwi.ui.widgets import textview, label, entry
 from kiwi.ui.delegates import GladeDelegate, GladeSlaveDelegate, ProxySlaveDelegate
 
-
-
 # Pedacos do programa
 
 import crisk
@@ -41,8 +39,7 @@ from model import *
 from basicsview import BasicsView
 from inventoryview import InventoryView
 from vulnerabilitiesview import VulnerabilitiesView
-
-from crisk.reports.invent_report import InventoryReport, PDFGenerator
+from reportview import ReportView
 
 # Adicionando paths para achar os resources
 
@@ -77,9 +74,9 @@ class MainView(GladeDelegate):
         tree.append(basics, Step('Inventory', 2))
         tree.append(basics, Step('Vulnerabilities', 3))
         tree.expand(basics)
-#        results = tree.append(None, Step('Results', 4))
-#        tree.append(results, Step('Inventory Report', 5))
-#        tree.expand(results)
+        reports = tree.append(None, Step('Results', 4))
+        self.first_report = tree.append(reports, Step('Inventory Report', 5))
+        tree.expand(reports)
 #        tree.select(self.first)
 
         if self.db_file is None:
@@ -119,6 +116,11 @@ class MainView(GladeDelegate):
         if index == 3:
             slave = VulnerabilitiesView(parent = self)
             self.attach_slave('placeholder', slave)
+        if index == 4:
+            tree.select(self.first_report)
+        if index == 5:
+            slave = ReportView(parent = self, reptype = 'inventory')
+            self.attach_slave('placeholder', slave)  
                         
     def on_about__activate(self, *args):
         diag = gtk.AboutDialog()
@@ -131,11 +133,6 @@ class MainView(GladeDelegate):
         diag.set_license(crisk.__license__)
         x = diag.run()
         diag.hide()
-               
-    def on_inventory_report__activate(self, *args):
-        assets = Asset.query().all()
-        report = InventoryReport(queryset = assets)
-        report.generate_by(PDFGenerator, filename = 'inventory.pdf')
         
     def on_open__activate(self, *args):
         filter = gtk.FileFilter()

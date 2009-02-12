@@ -46,6 +46,7 @@
                         <property name="name">help</property>
                         <property name="label" translatable="yes">_Help</property>
                         <property name="short_label" translatable="yes">Help</property>
+                        <property name="accelerator">&lt;Control&gt;h</property>
                     </widget>
                 </child>
                 <child>
@@ -583,6 +584,54 @@
                     <packing>
                         <property name="expand">False</property>
                         <property name="position">2</property>
+                    </packing>
+                </child>
+            </widget>
+        </child>
+    </widget>
+    <widget class="GtkWindow" id="ReportWindow">
+        <property name="default_height">250</property>
+        <property name="default_width">440</property>
+        <property name="height_request">200</property>
+        <property name="width_request">300</property>
+        <child>
+            <widget class="GtkVBox" id="vbox6">
+                <property name="visible">True</property>
+                <child>
+                    <widget class="GtkImage" id="report_image">
+                        <property name="visible">True</property>
+                    </widget>
+                </child>
+                <child>
+                    <widget class="GtkHBox" id="hbox12">
+                        <property name="visible">True</property>
+                        <child>
+                            <placeholder/>
+                            <packing/>
+                        </child>
+                        <child>
+                            <widget class="ProxyButton" id="reportview_save">
+                                <property name="data_type">str</property>
+                                <property name="label">gtk-save-as</property>
+                                <property name="model_attribute">reportview_save</property>
+                                <property name="use_stock">True</property>
+                                <property name="use_underline">False</property>
+                                <property name="visible">True</property>
+                            </widget>
+                            <packing>
+                                <property name="position">1</property>
+                            </packing>
+                        </child>
+                        <child>
+                            <placeholder/>
+                            <packing>
+                                <property name="position">2</property>
+                            </packing>
+                        </child>
+                    </widget>
+                    <packing>
+                        <property name="expand">False</property>
+                        <property name="position">1</property>
                     </packing>
                 </child>
             </widget>

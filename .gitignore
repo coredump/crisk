@@ -1,5 +1,5 @@
 *.pyc
-
 *.crisk
 *dist
 *build
+*.pdf
