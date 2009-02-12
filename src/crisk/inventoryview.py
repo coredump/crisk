@@ -41,11 +41,22 @@ class TempModel(Model):
         self.invent_description = description
         self.invent_value = currency(value)
         self.vulns = vulns
-        self.__invent_owner = None
+        self._invent_owner = owner
+        self._tmp_invent_owner = owner
         
-    def get_owner(self):
-        pass
-    #TODO: Create this getter and setter
+    def get_invent_owner(self):
+        if self._invent_owner is None:
+            return None
+        else:
+            return self._invent_owner.name
+    
+    def set_invent_owner(self, value):
+#        owner = Owner.get_by(name = value)
+#        if owner is None:
+#            owner = Owner(name = value)
+        self._tmp_invent_owner = value
+        
+    invent_owner = property(get_invent_owner, set_invent_owner)
 
 class InventoryAddEdit(ProxyDelegate):
     def __init__(self, list_updater, edit = None):
@@ -94,16 +105,24 @@ class InventoryAddEdit(ProxyDelegate):
     def on_invent_save_button__clicked(self, *args):
         model = self.__tmp
         if self.__edit is None:
+            owner = Owner.get_by(name = model._tmp_invent_owner)
+            if owner is None:
+                owner = Owner(name = model._tmp_invent_owner)
             asset = Asset(name = model.invent_name,
                           description = model.invent_description,
                           value = model.invent_value,
-                          owner = model.invent_owner)
+                          owner = owner)
 
         else:
+            owner = Owner.get_by(name = model._tmp_invent_owner)
+            if owner is None:
+                owner = Owner(name = model._tmp_invent_owner)
+                
             asset = self.__edit
             asset.name = model.invent_name
             asset.description = model.invent_description
             asset.value = model.invent_value
+            asset.owner = owner
 
         for item in self.tree:
             if item.state:

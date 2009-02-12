@@ -32,28 +32,11 @@ from kiwi.currency import currency
 from kiwi.ui.widgets import textview, label, entry
 from kiwi.ui.delegates import GladeDelegate, GladeSlaveDelegate, ProxySlaveDelegate
 
-__version__ = '0.1'
-__license__ = """
-Copyright 2009 José de Paula Eufrásio Júnior <jose.junior@gmail.com>
 
-This file is part of Crisk.
-
-Crisk is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-Crisk is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
-"""
 
 # Pedacos do programa
 
+import crisk
 from model import *
 from basicsview import BasicsView
 from inventoryview import InventoryView
@@ -140,12 +123,12 @@ class MainView(GladeDelegate):
     def on_about__activate(self, *args):
         diag = gtk.AboutDialog()
         diag.set_name('Crisk')
-        diag.set_version(__version__)
+        diag.set_version(crisk.__version__)
         diag.set_copyright('Copyright 2009 - José de Paula E. Júnior')
         diag.set_authors(['José de Paula E. Júnior <jose.junior@gmail.com>'])
         diag.set_comments('A simple risk management tool')
         diag.set_website('https://www.assembla.com/spaces/crisk')
-        diag.set_license(__license__)
+        diag.set_license(crisk.__license__)
         x = diag.run()
         diag.hide()
                

@@ -72,3 +72,6 @@ class Owner(Entity):
     name = Field(Unicode(64))
     
     assets = OneToMany('Asset')
+    
+    def __repr__(self):
+        return self.name
