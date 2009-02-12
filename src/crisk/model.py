@@ -32,12 +32,12 @@ class Basic(Entity):
 class Asset(Entity):
     using_options(autosetup = True, tablename = 'asset')
     
-    
     name = Field(Unicode(64))
     description = Field(UnicodeText)
     __value = Field(Numeric)
     
     vulns = ManyToMany('Vulnerability', ondelete = 'cascade')
+    owner = ManyToOne('Owner')
     
     def set_value(self, value):
         self.__value = int(value)
@@ -65,3 +65,10 @@ class Threat(Entity):
     description = Field(Unicode(256))
     
     vulns = ManyToMany('Vulnerability', ondelete = 'cascade')
+    
+class Owner(Entity):
+    using_options(autosetup = True, tablename = 'owner')
+    
+    name = Field(Unicode(64))
+    
+    assets = OneToMany('Asset')

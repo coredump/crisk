@@ -35,11 +35,17 @@ class vuln:
         self.id = id
 
 class TempModel(Model):
-    def __init__(self, name = None, description = None, value = 0, vulns = None):
+    def __init__(self, name = None, description = None, value = 0, 
+                 vulns = None, owner = None):
         self.invent_name = name
         self.invent_description = description
         self.invent_value = currency(value)
         self.vulns = vulns
+        self.__invent_owner = None
+        
+    def get_owner(self):
+        pass
+    #TODO: Create this getter and setter
 
 class InventoryAddEdit(ProxyDelegate):
     def __init__(self, list_updater, edit = None):
@@ -50,9 +56,10 @@ class InventoryAddEdit(ProxyDelegate):
             self.__tmp = TempModel()
         else:
             self.__tmp = TempModel(edit.name, edit.description, 
-                                   edit.value, edit.vulns)
+                                   edit.value, edit.vulns, edit.owner)
         
-        proxy_widgets = ['invent_name', 'invent_value', 'invent_description']
+        proxy_widgets = ['invent_name', 'invent_value', 'invent_description', 
+                         'invent_owner']
         ProxyDelegate.__init__(self, self.__tmp, proxy_widgets, 'ui', 
                                toplevel_name = 'InventoryAddWindow', 
                                delete_handler = self.dialog_delete)  
@@ -89,7 +96,8 @@ class InventoryAddEdit(ProxyDelegate):
         if self.__edit is None:
             asset = Asset(name = model.invent_name,
                           description = model.invent_description,
-                          value = model.invent_value)
+                          value = model.invent_value,
+                          owner = model.invent_owner)
 
         else:
             asset = self.__edit
@@ -122,6 +130,7 @@ class InventoryView(GladeSlaveDelegate):
                         searchable = True, sorted = True),
                  Column('description', title = 'Description', data_type = unicode, 
                         expand = True),
+                 Column('owner', title = 'Owner', data_type = unicode),
                  Column('value', title = 'Value', data_type = currency)]
         self.list.set_columns(cols)
         self.populate_list()

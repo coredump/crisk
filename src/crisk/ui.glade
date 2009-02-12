@@ -28,7 +28,12 @@
                         <property name="stock_id">gtk-about</property>
                     </widget>
                 </child>
-        
+                <child>
+                    <widget class="GtkAction" id="exit">
+                        <property name="name">exit</property>
+                        <property name="stock_id">gtk-quit</property>
+                    </widget>
+                </child>
                 <child>
                     <widget class="GtkAction" id="file">
                         <property name="name">file</property>
@@ -44,6 +49,12 @@
                     </widget>
                 </child>
                 <child>
+                    <widget class="GtkAction" id="inventory_report">
+                        <property name="name">inventory_report</property>
+                        <property name="label" translatable="yes">_Inventory Report</property>
+                    </widget>
+                </child>
+                <child>
                     <widget class="GtkAction" id="new">
                         <property name="name">new</property>
                         <property name="stock_id">gtk-new</property>
@@ -55,23 +66,10 @@
                         <property name="stock_id">gtk-open</property>
                     </widget>
                 </child>
-        
-                <child>
-                    <widget class="GtkAction" id="exit">
-                        <property name="name">exit</property>
-                        <property name="stock_id">gtk-quit</property>
-                    </widget>
-                </child>
                 <child>
                     <widget class="GtkAction" id="tools">
                         <property name="name">tools</property>
                         <property name="label" translatable="yes">_Tools</property>
-                    </widget>
-                </child>
-                <child>
-                    <widget class="GtkAction" id="inventory_report">
-                        <property name="name">inventory_report</property>
-                        <property name="label" translatable="yes">_Inventory Report</property>
                     </widget>
                 </child>
             </widget>
@@ -354,6 +352,42 @@
                     </packing>
                 </child>
                 <child>
+                    <widget class="GtkHBox" id="hbox11">
+                        <property name="border_width">5</property>
+                        <property name="visible">True</property>
+                        <child>
+                            <widget class="ProxyLabel" id="kiwilabel9">
+                                <property name="label" context="yes" translatable="yes">Owner</property>
+                                <property name="model_attribute">kiwilabel9</property>
+                                <property name="sizegroup">sizegroup5</property>
+                                <property name="visible">True</property>
+                                <property name="xalign">0.0</property>
+                            </widget>
+                            <packing>
+                                <property name="expand">False</property>
+                            </packing>
+                        </child>
+                        <child>
+                            <widget class="ProxyEntry" id="invent_owner">
+                                <property name="completion">True</property>
+                                <property name="data_type">unicode</property>
+                                <property name="mandatory">True</property>
+                                <property name="model_attribute">invent_owner</property>
+                                <property name="visible">True</property>
+                            </widget>
+                            <packing>
+                                <property name="expand">False</property>
+                                <property name="position">1</property>
+                            </packing>
+                        </child>
+                    </widget>
+                    <packing>
+                        <property name="expand">False</property>
+                        <property name="padding">5</property>
+                        <property name="position">3</property>
+                    </packing>
+                </child>
+                <child>
                     <widget class="GtkHBox" id="hbox9">
                         <property name="border_width">5</property>
                         <property name="visible">True</property>
@@ -382,7 +416,7 @@
                         </child>
                     </widget>
                     <packing>
-                        <property name="position">3</property>
+                        <property name="position">4</property>
                     </packing>
                 </child>
                 <child>
@@ -414,8 +448,7 @@
                     </widget>
                     <packing>
                         <property name="expand">False</property>
-                        <property name="padding">5</property>
-                        <property name="position">4</property>
+                        <property name="position">5</property>
                     </packing>
                 </child>
             </widget>
