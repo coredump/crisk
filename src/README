@@ -1,0 +1,9 @@
+Crisk
+
+Crisk is a simple risk management tool. It is built on top of great tools:
+
+* python
+* pygtk
+* kiwi
+* geraldo
+* elixir
