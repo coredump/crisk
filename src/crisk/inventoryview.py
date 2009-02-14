@@ -89,7 +89,7 @@ class InventoryAddEdit(ProxyDelegate):
         all_vulns = Vulnerability.query().all()
 
         print all_owners
-        self.owner_field.prefill(all_owners)
+        self.owner_field.prefill(all_owners, True)
         
         if self.__edit is not None:
             edit = self.__edit
@@ -109,20 +109,18 @@ class InventoryAddEdit(ProxyDelegate):
     
     def on_invent_save_button__clicked(self, *args):
         model = self.__tmp
+        
+        owner = Owner.get_by(name = unicode(model._tmp_invent_owner))
+        if owner is None:
+                owner = Owner(name = unicode(model._tmp_invent_owner))
+        
         if self.__edit is None:
-            owner = Owner.get_by(name = model._tmp_invent_owner)
-            if owner is None:
-                owner = Owner(name = model._tmp_invent_owner)
             asset = Asset(name = model.invent_name,
                           description = model.invent_description,
                           value = model.invent_value,
                           owner = owner)
 
-        else:
-            owner = Owner.get_by(name = model._tmp_invent_owner)
-            if owner is None:
-                owner = Owner(name = model._tmp_invent_owner)
-                
+        else:        
             asset = self.__edit
             asset.name = model.invent_name
             asset.description = model.invent_description
