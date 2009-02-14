@@ -16,7 +16,7 @@
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Crisk.  If not, see <http://www.gnu.org/licenses/>.
 
 import gtk
 
@@ -83,8 +83,13 @@ class InventoryAddEdit(ProxyDelegate):
         
         self.tree = self.get_widget('invent_vuln_list')
         self.tree.set_columns(cols)
+        self.owner_field = self.get_widget('invent_owner')
         
+        all_owners = [x.name for x in Owner.query().all()]
         all_vulns = Vulnerability.query().all()
+
+        print all_owners
+        self.owner_field.prefill(all_owners)
         
         if self.__edit is not None:
             edit = self.__edit
