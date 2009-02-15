@@ -45,6 +45,7 @@ class Asset(Entity):
     def get_value(self):
         return self.__value
     
+    
     value = property(get_value, set_value)
     
     
