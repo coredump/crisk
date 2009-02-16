@@ -55,6 +55,21 @@
                         <property name="label" translatable="yes">_Inventory Report</property>
                     </widget>
                 </child>
+                
+               	<child>
+                    <widget class="GtkAction" id="total_vuln_report">
+                        <property name="name">total_vuln_report</property>
+                        <property name="label" translatable="yes">_Total Vulnerability Risk Report</property>
+                    </widget>
+                </child>
+
+                <child>
+                    <widget class="GtkAction" id="total_asset_report">
+                        <property name="name">total_asset_report</property>
+                        <property name="label" translatable="yes">_Total Asset Risk Report</property>
+                    </widget>
+                </child>
+                
                 <child>
                     <widget class="GtkAction" id="new">
                         <property name="name">new</property>
@@ -68,15 +83,15 @@
                     </widget>
                 </child>
                 <child>
-                    <widget class="GtkAction" id="tools">
-                        <property name="name">tools</property>
-                        <property name="label" translatable="yes">_Tools</property>
+                    <widget class="GtkAction" id="reports">
+                        <property name="name">reports</property>
+                        <property name="label" translatable="yes">_Reports</property>
                     </widget>
                 </child>
             </widget>
         </child>
         <ui id="initial-state"><![CDATA[<ui>
-<menubar action="menubar1" name="menubar1"><menu action="file" name="file"><menuitem action="open" name="open"/><menuitem action="new" name="new"/><separator/><menuitem action="exit" name="exit"/></menu><menu action="tools" name="tools"><menuitem action="inventory_report" name="inventory_report"/></menu><menu action="help" name="help"><menuitem action="about" name="about"/></menu></menubar>
+<menubar action="menubar1" name="menubar1"><menu action="file" name="file"><menuitem action="open" name="open"/><menuitem action="new" name="new"/><separator/><menuitem action="exit" name="exit"/></menu><menu action="reports" name="reports"><menuitem action="inventory_report" name="inventory_report"/><menuitem action="total_vuln_report" name="total_vuln_report" /><menuitem action="total_asset_report" name="total_asset_report" /></menu><menu action="help" name="help"><menuitem action="about" name="about"/></menu></menubar>
 </ui>]]></ui>
     </widget>
     <widget class="GtkWindow" id="BasicsWindow">

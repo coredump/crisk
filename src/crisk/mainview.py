@@ -176,14 +176,26 @@ class MainView(GladeDelegate):
             res = error("An error has ocurred", info.__str__())
     
     def on_inventory_report__activate(self, *args):
-        from reports.invent_report import InventoryReport
-        
+        from crisk.reports.invent_report import InventoryReport
         filename = save('Save report',
                         current_name = "Inventory Report.pdf")
         if filename is not None:
             assets = Asset.query().all()
             report = InventoryReport(queryset = assets)
             report.generate_by(PDFGenerator, filename = filename)
+            
+    def on_total_asset_report__activate(self, *args):
+        pass
+    
+    def on_total_vuln_report__activate(self, *args):
+        from crisk.reports.vuln_report import TotalVulnReport
+        filename = save('Save report',
+                        current_name = "Total Vulnerability Risk Report.pdf")
+        if filename is not None:
+            vulns = Vulnerability.query().all()
+            report = TotalVulnReport(queryset = vulns)
+            report.generate_by(PDFGenerator, filename)
+        
             
     def on_exit__activate(self, *args):
         session.commit()

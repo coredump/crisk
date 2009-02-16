@@ -55,10 +55,17 @@ class Vulnerability(Entity):
     description = Field(Unicode(256))
     severity = Field(Numeric)
     chance = Field(Numeric)
-    
     assets = ManyToMany('Asset', ondelete = 'cascade')
     threats = ManyToMany('Threat', ondelete = 'cascade')
     
+    def __get_total_risk(self):
+        try:
+            return self.severity * self.chance
+        except:
+            return 0
+    
+    total_risk = property(__get_total_risk) 
+                           
 class Threat(Entity):
     using_options(autosetup = True, tablename = 'threat')
     

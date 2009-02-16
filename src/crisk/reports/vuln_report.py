@@ -22,33 +22,25 @@ import os
 
 from geraldo import *
 from geraldo.generators import PDFGenerator
-from kiwi.currency import currency
 from reportlab.lib.enums import TA_CENTER, TA_RIGHT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 
 from crisk.model import *
-from graphs import InventoryOwnerGraph
-
-graphs = InventoryOwnerGraph()
-
-
-class BandBegin(ReportBand):
-    height = 1*cm
-    elements = [
-                Label(text = "Inventory Report"),
-                ]
 
 class BandHeader(ReportBand):
     height = 1.5*cm
     elements = [
                 SystemField(expression='%(report_title)s', 
+                            width = 13*cm,
                             style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 16 }),
-                Label(text = 'Asset', top = 1*cm, left = 0.5*cm,
+                Label(text = 'Vulnerability', top = 1*cm, left = 0.5*cm,
                       style = {'fontName' : 'Helvetica-Bold'}),
-                Label(text = 'Owner', top = 1*cm, left = 7*cm,
+                Label(text = 'Severity', top = 1*cm, left = 11*cm,
                       style = {'fontName' : 'Helvetica-Bold'}),
-                Label(text = 'Value', top = 1*cm, bottom = 0.3*cm, left = 13*cm,
+                Label(text = 'Probability', top = 1*cm, bottom = 0.3*cm, left = 13*cm,
+                      style = {'fontName' : 'Helvetica-Bold'}),
+                Label(text = 'Risk', top = 1*cm, bottom = 0.3*cm, left = 16*cm,
                       style = {'fontName' : 'Helvetica-Bold'})
                 ]
     borders = {'bottom' : True}
@@ -56,34 +48,47 @@ class BandHeader(ReportBand):
 class BandDetail(ReportBand):
     height = 0.6*cm
     elements = (
-                ObjectValue(attribute_name='name', left = 0.5*cm, bottom = 0.1*cm,
+                ObjectValue(attribute_name='description', left = 0.5*cm, bottom = 0.1*cm,
                             top = 0.2*cm),
-                ObjectValue(attribute_name='owner', left = 7*cm, botton = 0.1*cm,
+                ObjectValue(attribute_name='severity', left = 11*cm, botton = 0.1*cm,
                             top = 0.2*cm),
-                ObjectValue(attribute_name='value', left = 13*cm, bottom = 0.1*cm, 
+                ObjectValue(attribute_name='chance', left = 13*cm, bottom = 0.1*cm, 
+                            top = 0.2*cm),
+                ObjectValue(attribute_name='total_risk', left = 16*cm, bottom = 0.1*cm, 
                             top = 0.2*cm,
-                            get_value = lambda val: currency(val.value).format(True, 2))
+                            style = {'fontSize' : 13 })
                 )
     #borders = {'all': True}
 
 class BandSummary(ReportBand):
-    owners = Owner.query().all()
-    graph_assets_per_owner = graphs.do_assets_per_owner(owners)
-    
     height = 1*cm
     elements = [
-                Label(text = 'Number of Assets:', top = 0.3*cm, left = 0.5*cm, 
+                Label(text = 'Number of Vulnerabilities:', top = 0.3*cm, left = 0.5*cm, 
+                      width = 10*cm,
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
-                ObjectValue(attribute_name = 'name', top = 0.3*cm, left = 5*cm, 
+                ObjectValue(attribute_name = 'description', top = 0.3*cm, left = 7*cm, 
                       action = FIELD_ACTION_COUNT,
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
-                Label(text = 'Total Value:', top = 0.3*cm, left = 10*cm, 
+                
+                Label(text = 'Maximum Risk:', top = 0.8*cm, left = 0.5*cm, 
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),                      
-                ObjectValue(attribute_name = 'value', top = 0.3*cm, left = 13*cm, 
-                      action = FIELD_ACTION_SUM,
+                ObjectValue(attribute_name = 'total_risk', top = 0.8*cm, left = 7*cm, 
+                      action = FIELD_ACTION_MAX,
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
-                      #get_value = lambda val: currency(val.value).format(True, 2))
-                Image(filename = graph_assets_per_owner.name, top = 1*cm, left = 2*cm)
+
+                Label(text = 'Minimum Risk:', top = 1.3*cm, left = 0.5*cm, 
+                      style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),                      
+                ObjectValue(attribute_name = 'total_risk', top = 1.3*cm, left = 7*cm, 
+                      action = FIELD_ACTION_MIN,
+                      style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
+                
+                Label(text = 'Average Risk:', top = 1.8*cm, left = 0.5*cm, 
+                      style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
+                ObjectValue(attribute_name = 'total_risk', top = 1.8*cm, left = 7*cm, 
+                      action = FIELD_ACTION_AVG,
+                      style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
+                
+                #Image(filename = graph_assets_per_owner.name, top = 1*cm, left = 2*cm)
                 ]
     borders = {'top' : True }
 
@@ -97,8 +102,8 @@ class BandFooter(ReportBand):
     borders = {'top': True}
 
 
-class InventoryReport(Report):
-    title = 'Inventory Report'
+class TotalVulnReport(Report):
+    title = 'Total Vulnerability Report'
 
     page_size = A4
     margin_left = 2*cm
@@ -106,9 +111,8 @@ class InventoryReport(Report):
     margin_right = 2*cm
     margin_bottom = 2*cm
 
-    band_summary = BandSummary()
     band_page_header = BandHeader()
-    #band_begin = BandBegin()
     band_detail = BandDetail()
+    band_summary = BandSummary()
     band_page_footer = BandFooter()
     
