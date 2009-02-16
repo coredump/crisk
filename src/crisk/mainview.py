@@ -196,7 +196,6 @@ class MainView(GladeDelegate):
             report = TotalVulnReport(queryset = vulns)
             report.generate_by(PDFGenerator, filename)
         
-            
     def on_exit__activate(self, *args):
         session.commit()
         gtk.main_quit()

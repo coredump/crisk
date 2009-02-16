@@ -73,11 +73,29 @@ class InventoryOwnerGraph:
         ax.bar(ind, values, 0.35, color = 'r')
         ax.set_title('Value of assets per owner')
         ax.set_xticklabels(labels, rotation = 'vertical')
+
+class VulnGraph:
     
+    def do_total_vuln_graph(self, vulns):
+        figure(1, figsize=(6,6), facecolor = 'w')
+        
+        x = [int(v.severity) for v in vulns]
+        y = [int(v.chance) for v in vulns]
+        z = [int(v.total_risk) for v in vulns]
+        print x, y, z
+        plot(x, y, 'r^', label = 'Risk')
+        axis([0, 5, 0, 5])
+        grid()
+        
+        
+        show()
+
 if __name__ == '__main__':
-    metadata.bind = 'sqlite:///x:/dev/Workspace/Crisk/src/teste.crisk'
+    #metadata.bind = 'sqlite:///x:/dev/Workspace/Crisk/src/teste.crisk'
+    metadata.bind = 'sqlite:////home/coredump/workspace/Crisk/src/teste.crisk'
     metadata.bind.echo = False
     setup_all()
     owners = Owner.query().all()
-    g = InventoryOwnerGraph()
-    g.do_value_per_owner(owners)
+    vulns = Vulnerability.query().all()
+    g = VulnGraph()
+    g.do_total_vuln_graph(vulns)
