@@ -18,24 +18,28 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Crisk.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+
 from geraldo import Report, landscape, ReportBand, TableBand, ObjectValue, \
-                    Label, SystemField, BAND_WIDTH, FIELD_ACTION_SUM, \
+                    Label, SystemField, Image, BAND_WIDTH, FIELD_ACTION_SUM, \
                     FIELD_ACTION_COUNT
 from geraldo.generators import PDFGenerator
 from kiwi.currency import currency
-
+from graphs import InventoryOwnerGraph
 from reportlab.lib.enums import TA_CENTER, TA_RIGHT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 
-class BandFooter(ReportBand):
-    height = 0.5*cm
+from crisk.model import *
+
+graphs = InventoryOwnerGraph()
+
+
+class BandBegin(ReportBand):
+    height = 1*cm
     elements = [
-    Label(text='Created by Crisk', top=0.1*cm, left=0),
-            SystemField(expression='Page # %(page_number)d of %(page_count)d', top=0.1*cm,
-            width=BAND_WIDTH, style={'alignment': TA_RIGHT}),
-    ]
-    borders = {'top': True}
+                Label(text = "Inventory Report"),
+                ]
 
 class BandHeader(ReportBand):
     height = 1.5*cm
@@ -44,12 +48,30 @@ class BandHeader(ReportBand):
                             style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 16 }),
                 Label(text = 'Asset', top = 1*cm, left = 0.5*cm,
                       style = {'fontName' : 'Helvetica-Bold'}),
+                Label(text = 'Owner', top = 1*cm, left = 7*cm,
+                      style = {'fontName' : 'Helvetica-Bold'}),
                 Label(text = 'Value', top = 1*cm, bottom = 0.3*cm, left = 13*cm,
                       style = {'fontName' : 'Helvetica-Bold'})
                 ]
     borders = {'bottom' : True}
 
+class BandDetail(ReportBand):
+    height = 0.6*cm
+    elements = (
+                ObjectValue(attribute_name='name', left = 0.5*cm, bottom = 0.1*cm,
+                            top = 0.2*cm),
+                ObjectValue(attribute_name='owner', left = 7*cm, botton = 0.1*cm,
+                            top = 0.2*cm),
+                ObjectValue(attribute_name='value', left = 13*cm, bottom = 0.1*cm, 
+                            top = 0.2*cm,
+                            get_value = lambda val: currency(val.value).format(True, 2))
+                )
+    #borders = {'all': True}
+
 class BandSummary(ReportBand):
+    owners = Owner.query().all()
+    graph_assets_per_owner = graphs.do_assets_per_owner(owners)
+    
     height = 1*cm
     elements = [
                 Label(text = 'Number of Assets:', top = 0.3*cm, left = 0.5*cm, 
@@ -61,27 +83,20 @@ class BandSummary(ReportBand):
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),                      
                 ObjectValue(attribute_name = 'value', top = 0.3*cm, left = 13*cm, 
                       action = FIELD_ACTION_SUM,
-                      style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12})
+                      style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
                       #get_value = lambda val: currency(val.value).format(True, 2))
+                Image(filename = graph_assets_per_owner.name, top = 1*cm, left = 2*cm)
                 ]
     borders = {'top' : True }
 
-class BandBegin(ReportBand):
-    height = 1*cm
+class BandFooter(ReportBand):
+    height = 0.5*cm
     elements = [
-                Label(text = "Inventory Report"),
-                ]
-
-class BandDetail(ReportBand):
-    height = 0.6*cm
-    elements = (
-                ObjectValue(attribute_name='name', left = 0.5*cm, bottom = 0.1*cm,
-                            top = 0.2*cm),
-                ObjectValue(attribute_name='value', left = 13*cm, bottom = 0.1*cm, 
-                            top = 0.2*cm,
-                            get_value = lambda val: currency(val.value).format(True, 2))
-                )
-    #borders = {'all': True}
+    Label(text='Created by Crisk', top=0.1*cm, left=0),
+            SystemField(expression='Page # %(page_number)d of %(page_count)d', top=0.1*cm,
+            width=BAND_WIDTH, style={'alignment': TA_RIGHT}),
+    ]
+    borders = {'top': True}
 
 
 class InventoryReport(Report):

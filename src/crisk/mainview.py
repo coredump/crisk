@@ -31,6 +31,7 @@ from kiwi.ui.objectlist import Column, ObjectList
 from kiwi.currency import currency
 from kiwi.ui.widgets import textview, label, entry
 from kiwi.ui.delegates import GladeDelegate, GladeSlaveDelegate, ProxySlaveDelegate
+from geraldo.generators import PDFGenerator
 
 # Pedacos do programa
 
@@ -39,7 +40,7 @@ from model import *
 from basicsview import BasicsView
 from inventoryview import InventoryView
 from vulnerabilitiesview import VulnerabilitiesView
-from reportview import ReportView
+
 
 # Adicionando paths para achar os resources
 
@@ -74,9 +75,9 @@ class MainView(GladeDelegate):
         tree.append(basics, Step('Inventory', 2))
         tree.append(basics, Step('Vulnerabilities', 3))
         tree.expand(basics)
-        reports = tree.append(None, Step('Results', 4))
-        self.first_report = tree.append(reports, Step('Inventory Report', 5))
-        tree.expand(reports)
+#        reports = tree.append(None, Step('Results', 4))
+#        self.first_report = tree.append(reports, Step('Inventory Report', 5))
+#        tree.expand(reports)
 #        tree.select(self.first)
 
         if self.db_file is None:
@@ -116,11 +117,11 @@ class MainView(GladeDelegate):
         if index == 3:
             slave = VulnerabilitiesView(parent = self)
             self.attach_slave('placeholder', slave)
-        if index == 4:
-            tree.select(self.first_report)
-        if index == 5:
-            slave = ReportView(parent = self, reptype = 'inventory')
-            self.attach_slave('placeholder', slave)  
+#        if index == 4:
+#            tree.select(self.first_report)
+#        if index == 5:
+#            slave = ReportView(parent = self, reptype = 'inventory')
+#           self.attach_slave('placeholder', slave)  
                         
     def on_about__activate(self, *args):
         diag = gtk.AboutDialog()
@@ -173,6 +174,16 @@ class MainView(GladeDelegate):
             return True
         except Exception, info:
             res = error("An error has ocurred", info.__str__())
+    
+    def on_inventory_report__activate(self, *args):
+        from reports.invent_report import InventoryReport
+        
+        filename = save('Save report',
+                        current_name = "Inventory Report.pdf")
+        if filename is not None:
+            assets = Asset.query().all()
+            report = InventoryReport(queryset = assets)
+            report.generate_by(PDFGenerator, filename = filename)
             
     def on_exit__activate(self, *args):
         session.commit()
