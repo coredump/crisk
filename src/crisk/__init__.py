@@ -23,7 +23,7 @@
 This is the basic module for the Crisk Application
 """ 
 
-__version__ = '0.1'
+__version__ = '0.2'
 __license__ = """
 Copyright 2009 José de Paula Eufrásio Júnior <jose.junior@gmail.com>
 
