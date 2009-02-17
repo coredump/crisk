@@ -27,6 +27,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 
 from crisk.model import *
+from crisk.reports.graphs import VulnGraph 
 
 class BandHeader(ReportBand):
     height = 1.5*cm
@@ -61,6 +62,10 @@ class BandDetail(ReportBand):
     #borders = {'all': True}
 
 class BandSummary(ReportBand):
+    graphs = VulnGraph()
+    vulns = Vulnerability.query().all()
+    graph_total_risk = graphs.do_total_vuln_graph(vulns)
+    
     height = 1*cm
     elements = [
                 Label(text = 'Number of Vulnerabilities:', top = 0.3*cm, left = 0.5*cm, 
@@ -87,8 +92,8 @@ class BandSummary(ReportBand):
                 ObjectValue(attribute_name = 'total_risk', top = 1.8*cm, left = 7*cm, 
                       action = FIELD_ACTION_AVG,
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
+                Image(filename = graph_total_risk.name, top = 2.3*cm, left = 2*cm)
                 
-                #Image(filename = graph_assets_per_owner.name, top = 1*cm, left = 2*cm)
                 ]
     borders = {'top' : True }
 

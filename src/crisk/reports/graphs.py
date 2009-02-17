@@ -77,19 +77,51 @@ class InventoryOwnerGraph:
 class VulnGraph:
     
     def do_total_vuln_graph(self, vulns):
-        figure(1, figsize=(6,6), facecolor = 'w')
-        
+        fig = figure(1, figsize=(5,5), facecolor = 'w')
+        axes = Axes(fig, [.2, .1, .7, .8])
+        axes.autoscale_view()
+        axes.set_autoscale_on(True)
+        fig.add_axes(axes)
         x = [int(v.severity) for v in vulns]
         y = [int(v.chance) for v in vulns]
-        z = [int(v.total_risk) for v in vulns]
-        print x, y, z
-        plot(x, y, 'r^', label = 'Risk')
-        axis([0, 5, 0, 5])
-        grid()
-        
-        
-        show()
+        s = []
+        tmp = []
+        dic = {}
+        final_x = []
+        final_y = []
+        final_s = []
+        for i in range(len(x)):
+            tmp.append((x[i], y[i]))     
+        for i in range(len(tmp)):
+            if dic.has_key(tmp[i]):
+                dic[tmp[i]] += 1
+            else:
+                dic.update({tmp[i] : 1})
+        for j in dic.keys():
+            final_x.append(j[0])
+            final_y.append(j[1])
+            final_s.append(dic[j])
+        final_s = array(final_s)
+        subplot(111)
+        ax_max = 5.2
+        ax_min = 0
+        scatter(final_x, final_y, s = 150*final_s, c= 'r', marker = 'o', label = 'Risk', antialiased = True)
+        axis([ax_min, ax_max, ax_min, ax_max])
+        axvspan(0, 1, 0, 3/ax_max, facecolor = 'g', alpha = 0.2, lw = 0)
+        axvspan(1, 2, 0, 2/ax_max, facecolor = 'g', alpha = 0.2, lw = 0)
+        axvspan(2, 3, 0, 1/ax_max, facecolor = 'g', alpha = 0.2, lw = 0)
 
+        axvspan(2, 5.2, 4/ax_max, 5.2/ax_max, facecolor = 'r', alpha = 0.2, lw = 0)
+        axvspan(3, 5.2, 3/ax_max, 4/ax_max, facecolor = 'r', alpha = 0.2, lw = 0)
+        axvspan(4, 5.2, 3/ax_max, 2/ax_max, facecolor = 'r', alpha = 0.2, lw = 0)
+        title('Risk Matrix')
+        
+        tmp_file = NamedTemporaryFile()
+#        tmp_file = open('temp.png', 'w+b')
+        tmp_file.close()
+        savefig(tmp_file.name, format = 'png', transparent = True)
+        return tmp_file
+        
 if __name__ == '__main__':
     #metadata.bind = 'sqlite:///x:/dev/Workspace/Crisk/src/teste.crisk'
     metadata.bind = 'sqlite:////home/coredump/workspace/Crisk/src/teste.crisk'
