@@ -18,6 +18,14 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Crisk.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+crisk.mainview
+--------------
+
+This module manages the main window of the Crisk app, using Kiwi GladeView as base view
+for the other SlaveViews.
+"""
+
 import gtk
 import pygtk
 import sys, os
@@ -50,17 +58,31 @@ if not hasattr(sys, 'frozen'):
     kiwi.environ.environ.add_resource('glade', standalone_path)
 
 class Step:
+    """
+    .. class:: Step
+    
+    Simple placeholder class for the maintree.
+    """
     def __init__(self, name, idx):
         self.name = name
         self.idx = idx        
         
 class MainView(GladeDelegate):
+    """
+    .. class:: MainView
+    
+    The Kiwi BaseView, using GladeDelegate. Provides the main tree, menu bars and
+    status bar. Also provides the placeholder frame on the right where the kiwi
+    SlaveViews will be shown.
+    """
     
     db_file = None
 
     def __init__(self):
-       
-        # Criando a tree inicial
+        """
+        Initiates the MainView and creates the main tree. Also calls the GladeDelegate
+        __init__ to setup the glade UI and other Kiwi requirements.
+        """
 
         GladeDelegate.__init__(self, "ui", toplevel_name = 'MainWindow', 
                                delete_handler = self.on_exit__activate)        

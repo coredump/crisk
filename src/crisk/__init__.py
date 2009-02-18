@@ -20,7 +20,7 @@
 
 
 """ 
-This is the basic module for the Crisk Application
+This is the basic package for the Crisk Application.
 """ 
 
 __version__ = '0.2'

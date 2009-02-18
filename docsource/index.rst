@@ -29,7 +29,6 @@ Contents
    crisk
    screenshots
    using
-   
 
 Indices and tables
 ==================
