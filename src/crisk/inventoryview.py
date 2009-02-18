@@ -18,6 +18,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Crisk.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+:mod:`crisk.inventoryview`
+==========================
+
+Asset inventory view.
+"""
+
 import gtk
 
 from kiwi.ui.delegates import GladeDelegate, GladeSlaveDelegate, ProxyDelegate
@@ -29,12 +36,42 @@ from model import *
 from elixir import *
 
 class vuln:
+    """
+    Placeholder class for assembling a kiwi ObjectList with vulnerabilities in the 
+    add/edit vulnerability window.
+    
+    :param name: Name of the vulnerability
+    :param state: If the vulnerability checkbox is ticked or not
+    :param id: An id to make easier to delete/change data on the DB
+    :type name: String
+    :type state: Boolean
+    :type id: Integer or None
+    :rtype: a :class:`vuln` instance
+    """
+    
     def __init__(self, name, state = False, id = None):
         self.description = name
         self.state = state
         self.id = id
 
 class TempModel(Model):
+    """
+    This class is a temporary model copy of the Asset defined in :class:`crisk.model.Asset`,
+    used to block direct alterations to the DB while adding or editing assets (thus
+    giving the option to cancel). 
+    
+    :param name: The name of the asset
+    :param description: The short description of the asset
+    :param value: The monetary value of the asset
+    :param vulns: :class:`crisk.model.Vulnerability` associated with the asset 
+    :param owner: The owner of the asset, from :class:`crisk.model.Owner` 
+    :type name: String
+    :type description: String
+    :type value: Integer
+    :type vulns: List
+    :type owner: Owner
+    """
+    
     def __init__(self, name = None, description = None, value = 0, 
                  vulns = None, owner = None):
         self.invent_name = name
@@ -45,20 +82,40 @@ class TempModel(Model):
         self._tmp_invent_owner = owner
         
     def get_invent_owner(self):
+        """
+        Returns the name of the Asset owner as a String or None if there is no
+        owner associated. Used for the :attr:`invent_owner` :func:`property`.
+        
+        :rtype: String        
+        """
+        
         if self._invent_owner is None:
             return None
         else:
             return self._invent_owner.name
     
     def set_invent_owner(self, value):
-#        owner = Owner.get_by(name = value)
-#        if owner is None:
-#            owner = Owner(name = value)
+        """
+        Sets the owner of the asset. Used as a :func:`property`.
+        
+        :param value: the name to be set
+        :type value: String
+        """
+
         self._tmp_invent_owner = value
         
     invent_owner = property(get_invent_owner, set_invent_owner)
 
 class InventoryAddEdit(ProxyDelegate):
+    """
+    Shows a dialog to add or edit an Asset.
+    
+    :param list_updater: The function responsible for updating the inventory list
+    :param edit: The :class:`TempModel` instance to be edited
+    :type list_updater: Callable
+    :type edit: TempModel
+    """
+    
     def __init__(self, list_updater, edit = None):
         self.__edit = edit  
         self.__parent_populate_list = list_updater
@@ -88,7 +145,6 @@ class InventoryAddEdit(ProxyDelegate):
         all_owners = [x.name for x in Owner.query().all()]
         all_vulns = Vulnerability.query().all()
 
-        print all_owners
         self.owner_field.prefill(all_owners, True)
         
         if self.__edit is not None:
@@ -140,6 +196,11 @@ class InventoryAddEdit(ProxyDelegate):
         self.hide_and_quit()
 
 class InventoryView(GladeSlaveDelegate):
+    """
+    Creates the SlaveView and list of Assets.
+    
+    :param parent: the mainwindow instance to be used as parent for dialogs
+    """
     def __init__(self, parent):
         
         self.__parent = parent

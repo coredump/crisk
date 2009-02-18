@@ -26,9 +26,10 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   crisk
    screenshots
    using
+   todo
+   crisk
 
 Indices and tables
 ==================

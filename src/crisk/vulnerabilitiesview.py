@@ -17,6 +17,12 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+"""
+:mod:`crisk.vulnerabiliesview`
+==============================
+
+This module provides the Vulnerabilities slave view and list.
+"""
 
 import gtk
 
@@ -30,6 +36,12 @@ from elixir import *
 
 
 class VulnerabilitiesView(GladeSlaveDelegate):
+    """
+    Creates a new GladeSlaveView to be attached to the mainview.
+    
+    :param parent: The parent mainview to be used as parent for dialogs.
+    :type parent: View
+    """
     def __init__(self, parent):
         
         self.__parent = parent

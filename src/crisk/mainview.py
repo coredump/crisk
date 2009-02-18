@@ -19,8 +19,8 @@
 #    along with Crisk.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-crisk.mainview
---------------
+:mod:`crisk.mainview`
+=====================
 
 This module manages the main window of the Crisk app, using Kiwi GladeView as base view
 for the other SlaveViews.
@@ -58,10 +58,14 @@ if not hasattr(sys, 'frozen'):
     kiwi.environ.environ.add_resource('glade', standalone_path)
 
 class Step:
-    """
-    .. class:: Step
-    
+    """    
     Simple placeholder class for the maintree.
+    
+    :param name: name of the new step
+    :param idx: index on the main tree
+    :type name: String
+    :type idx: Integer
+    :rtype: :class:`Step` instance
     """
     def __init__(self, name, idx):
         self.name = name
@@ -69,8 +73,6 @@ class Step:
         
 class MainView(GladeDelegate):
     """
-    .. class:: MainView
-    
     The Kiwi BaseView, using GladeDelegate. Provides the main tree, menu bars and
     status bar. Also provides the placeholder frame on the right where the kiwi
     SlaveViews will be shown.
@@ -79,10 +81,6 @@ class MainView(GladeDelegate):
     db_file = None
 
     def __init__(self):
-        """
-        Initiates the MainView and creates the main tree. Also calls the GladeDelegate
-        __init__ to setup the glade UI and other Kiwi requirements.
-        """
 
         GladeDelegate.__init__(self, "ui", toplevel_name = 'MainWindow', 
                                delete_handler = self.on_exit__activate)        
@@ -106,6 +104,10 @@ class MainView(GladeDelegate):
             self.open_or_new()   
     
     def open_or_new(self):
+        """
+        Shows a dialog with options for opening a file or creating a new one. Used
+        on the startup to provide a ``db_file``
+        """
         result = yesno('Do you want to open a previous file?\n\n' + 
                        'Choose \'Yes\' to open a previous work, or\n' + 
                        'choose \'No\' if you want to create a new DB') 
@@ -121,6 +123,9 @@ class MainView(GladeDelegate):
             sys.exit()
     
     def check_and_detach(self):
+        """
+        Checks if there is a slave attached to the mainview and detaches it if true.
+        """
         if self.get_slave('placeholder') is not None:
             self.detach_slave('placeholder')
     

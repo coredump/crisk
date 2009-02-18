@@ -18,6 +18,14 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+:mod:`crisk.model`
+==================
+
+This module provides the data model for Crisk, using Elixir with the sqlite 
+engine.
+"""
+
 import datetime
 from elixir import *
 

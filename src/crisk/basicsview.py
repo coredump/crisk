@@ -18,11 +18,22 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Crisk.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+:mod:`crisk.basicsview`
+=======================
+
+This module provides a SlaveView with basic data for the Crisk Application.
+"""
+
 from kiwi.ui.delegates import ProxySlaveDelegate
 
 from model import *
 
 class BasicsView(ProxySlaveDelegate):
+    """
+    Provides a ``Proxy`` slave view.
+    """
+    
     def __init__(self):        
         widget_list = ['name', 'location', 'initial_date', 'scope']
         try:
@@ -33,7 +44,8 @@ class BasicsView(ProxySlaveDelegate):
         ProxySlaveDelegate.__init__(self, basics_model, widget_list, 
                                     gladefile = 'ui', 
                                     toplevel_name = 'BasicsWindow')
-    def proxy_updated(self, *args):
-#        print args
-#        session.commit()
-        pass
+#    def proxy_updated(self, *args):
+#
+##        print args
+##        session.commit()
+#        pass
