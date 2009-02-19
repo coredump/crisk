@@ -24,10 +24,12 @@
 
 This module provides a SlaveView with basic data for the Crisk Application.
 """
+import gettext
 
 from kiwi.ui.delegates import ProxySlaveDelegate
-
 from model import *
+
+_ = gettext.gettext
 
 class BasicsView(ProxySlaveDelegate):
     """
@@ -44,8 +46,3 @@ class BasicsView(ProxySlaveDelegate):
         ProxySlaveDelegate.__init__(self, basics_model, widget_list, 
                                     gladefile = 'ui', 
                                     toplevel_name = 'BasicsWindow')
-#    def proxy_updated(self, *args):
-#
-##        print args
-##        session.commit()
-#        pass

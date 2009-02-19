@@ -28,11 +28,18 @@ from kiwi.environ import Application
 # Adicionando paths para achar os resources
 
 app = Application('crisk')
-app.enable_translation()
-if not hasattr(sys, 'frozen'):
-    app.add_global_resource('glade', 'glade')
-    app.add_global_resource('pixmaps', 'pixmaps')
+dir = os.path.dirname(__file__)
+rdir = os.path.abspath(os.path.join(dir, '../../'))
 
+if not hasattr(sys, 'frozen'):
+    if app.uninstalled:
+        app.add_global_resource('glade', os.path.join(rdir, 'glade'))
+        app.add_global_resource('pixmaps', os.path.join(rdir, 'pixmaps'))
+
+app.enable_translation()
+app.set_application_domain('crisk')
+
+__url__ = 'http://coredump.github.com/crisk/'
 __version__ = '0.2'
 __license__ = """
 Copyright 2009 José de Paula Eufrásio Júnior <jose.junior@gmail.com>

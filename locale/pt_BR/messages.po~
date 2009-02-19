@@ -1,0 +1,256 @@
+#
+# crisk Language File
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: crisk 0.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-02-19 16:36-0300\n"
+"PO-Revision-Date: 2009-02-19 16:41-0300\n"
+"Last-Translator: Jose de Paula E. Junior <jose.junior@gmail.com>\n"
+"Language-Team: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: utf-8"
+
+#: ../src/crisk/inventoryview.py:139 ../src/crisk/inventoryview.py:217
+#: ../src/crisk/vulnerabilitiesview.py:58 ../glade/ui.glade:303
+msgid "Description"
+msgstr "Descrição"
+
+#: ../src/crisk/inventoryview.py:141
+msgid "Applicable?"
+msgstr "Aplicável?"
+
+#: ../src/crisk/inventoryview.py:215 ../glade/ui.glade:117
+#: ../glade/ui.glade:269
+msgid "Name"
+msgstr "Nome"
+
+#: ../src/crisk/inventoryview.py:219 ../glade/ui.glade:376
+#: ../src/crisk/reports/invent_report.py:45
+msgid "Owner"
+msgstr "Dono"
+
+#: ../src/crisk/inventoryview.py:220 ../glade/ui.glade:339
+#: ../src/crisk/reports/invent_report.py:47
+msgid "Value"
+msgstr "Valor"
+
+#: ../src/crisk/inventoryview.py:240
+msgid "Really delete the selected asset?\n"
+msgstr "Deseja apagar o ativo selecionado?\n"
+
+#: ../src/crisk/inventoryview.py:241
+msgid "This action can't be undone!"
+msgstr "Esta ação não pode ser desfeita!"
+
+#: ../src/crisk/mainview.py:85
+msgid "Step"
+msgstr "Passo"
+
+#: ../src/crisk/mainview.py:88
+msgid "Basic Data"
+msgstr "Dados Básicos"
+
+#: ../src/crisk/mainview.py:89
+msgid "Target Information"
+msgstr "Informação do Alvo"
+
+#: ../src/crisk/mainview.py:91 ../glade/ui.glade:480
+msgid "Inventory"
+msgstr "Inventário"
+
+#: ../src/crisk/mainview.py:92 ../glade/ui.glade:412 ../glade/ui.glade:662
+msgid "Vulnerabilities"
+msgstr "Vulnerabilidades"
+
+#: ../src/crisk/mainview.py:111
+msgid ""
+"Do you want to open a previous file?\n"
+"\n"
+msgstr ""
+"Você deseja abrir um arquivo já existente?\n"
+"\n"
+
+#: ../src/crisk/mainview.py:112
+msgid "Choose 'Yes' to open a previous work, or\n"
+msgstr "Escolha 'Sim' para abrir um trabalho anterior, ou\n"
+
+#: ../src/crisk/mainview.py:113
+msgid "choose 'No' if you want to create a new DB"
+msgstr "escolha 'Não' se você quer criar um novo BD"
+
+#: ../src/crisk/mainview.py:162
+msgid "A simple risk management tool"
+msgstr "Uma ferramenta simples para gerenciamento de risco"
+
+#: ../src/crisk/mainview.py:171
+msgid "Open"
+msgstr "Abrir"
+
+#: ../src/crisk/mainview.py:184
+msgid "Error opening database"
+msgstr "Erro ao abrir o banco de dados"
+
+#: ../src/crisk/mainview.py:187
+msgid "Save"
+msgstr "Salvar"
+
+#: ../src/crisk/mainview.py:206
+msgid "An error has ocurred"
+msgstr "Ocorreu um erro"
+
+#: ../src/crisk/mainview.py:210 ../src/crisk/mainview.py:222
+msgid "Save report"
+msgstr "Salvar relatório"
+
+#: ../src/crisk/mainview.py:211
+msgid "Inventory Report.pdf"
+msgstr "Relatório de Inventário.pdf"
+
+#: ../src/crisk/mainview.py:223
+msgid "Total Vulnerability Risk Report.pdf"
+msgstr "Relatório Total de Risco das Vulnerabilidades.pdf"
+
+#: ../src/crisk/vulnerabilitiesview.py:60
+#: ../src/crisk/reports/vuln_report.py:43
+msgid "Severity"
+msgstr "Severidade"
+
+#: ../src/crisk/vulnerabilitiesview.py:62
+#: ../src/crisk/reports/vuln_report.py:45
+msgid "Probability"
+msgstr "Probabilidade"
+
+#: ../src/crisk/vulnerabilitiesview.py:75
+#, fuzzy
+msgid "Enter description..."
+msgstr "Adicione a descrição"
+
+#: ../glade/ui.glade:40
+msgid "_File"
+msgstr "_Arquivo"
+
+#: ../glade/ui.glade:41
+msgid "File"
+msgstr "Arquivo"
+
+#: ../glade/ui.glade:47
+msgid "_Help"
+msgstr "A_juda"
+
+#: ../glade/ui.glade:48
+msgid "Help"
+msgstr "Ajuda"
+
+#: ../glade/ui.glade:55
+msgid "_Inventory Report"
+msgstr "_Relatório de Inventário"
+
+#: ../glade/ui.glade:62
+msgid "_Total Vulnerability Risk Report"
+msgstr "Relatório _Total de Risco das Vulnerabilidades"
+
+#: ../glade/ui.glade:69
+msgid "_Total Asset Risk Report"
+msgstr "Relatório de _Risco Total dos Ativos"
+
+#: ../glade/ui.glade:88
+msgid "_Reports"
+msgstr "_Relatórios"
+
+#: ../glade/ui.glade:104
+msgid "Basic Information"
+msgstr "Informações Básicas"
+
+#: ../glade/ui.glade:148
+msgid "Location"
+msgstr "Local"
+
+#: ../glade/ui.glade:180
+msgid "Initial Date"
+msgstr "Data Inicial"
+
+#: ../glade/ui.glade:212
+msgid "Scope"
+msgstr "Escopo"
+
+#: ../glade/ui.glade:257
+msgid "Add asset to inventory"
+msgstr "Adicionar ativo ao inventário"
+
+#: ../glade/ui.glade:553
+msgid "Crisk"
+msgstr "Crisk "
+
+#: ../src/crisk/reports/graphs.py:56
+msgid "Number of assets per owner"
+msgstr "Número de ativos por dono"
+
+#: ../src/crisk/reports/graphs.py:76
+msgid "Value of assets per owner"
+msgstr "Valor de ativos por dono"
+
+#: ../src/crisk/reports/graphs.py:119
+msgid "Risk Matrix"
+msgstr "Matriz de Riscos"
+
+#: ../src/crisk/reports/invent_report.py:43
+msgid "Asset"
+msgstr "Ativo"
+
+#: ../src/crisk/reports/invent_report.py:70
+msgid "Number of Assets:"
+msgstr "Número de Ativos"
+
+#: ../src/crisk/reports/invent_report.py:75
+msgid "Total Value:"
+msgstr "Valor Total"
+
+#: ../src/crisk/reports/invent_report.py:87
+#: ../src/crisk/reports/vuln_report.py:105
+msgid "Created by Crisk"
+msgstr "Criado por Crisk"
+
+#: ../src/crisk/reports/invent_report.py:88
+#: ../src/crisk/reports/vuln_report.py:106
+#, python-format
+msgid "Page # %(page_number)d of %(page_count)d"
+msgstr "Página %(page_number)d de %(page_count)d"
+
+#: ../src/crisk/reports/invent_report.py:95
+#, fuzzy
+msgid "Inventory Report"
+msgstr "_Relatório de Inventário"
+
+#: ../src/crisk/reports/vuln_report.py:41
+msgid "Vulnerability"
+msgstr "Vulnerabilidade"
+
+#: ../src/crisk/reports/vuln_report.py:47
+#, fuzzy
+msgid "Risk"
+msgstr "Risco"
+
+#: ../src/crisk/reports/vuln_report.py:73
+msgid "Number of Vulnerabilities:"
+msgstr "Número de Vulnerabilidades:"
+
+#: ../src/crisk/reports/vuln_report.py:80
+msgid "Maximum Risk:"
+msgstr "Risco Máximo"
+
+#: ../src/crisk/reports/vuln_report.py:86
+msgid "Minimum Risk:"
+msgstr "Risco Mínimo"
+
+#: ../src/crisk/reports/vuln_report.py:92
+msgid "Average Risk:"
+msgstr "Risco Médio"
+
+#: ../src/crisk/reports/vuln_report.py:113
+#, fuzzy
+msgid "Total Vulnerability Report"
+msgstr "Relatório _Total de Risco das Vulnerabilidades"
+

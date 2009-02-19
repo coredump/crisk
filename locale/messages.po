@@ -1,0 +1,252 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-02-19 16:47-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/crisk/inventoryview.py:139 ../src/crisk/inventoryview.py:217
+#: ../src/crisk/vulnerabilitiesview.py:58 ../glade/ui.glade:303
+msgid "Description"
+msgstr ""
+
+#: ../src/crisk/inventoryview.py:141
+msgid "Applicable?"
+msgstr ""
+
+#: ../src/crisk/inventoryview.py:215 ../glade/ui.glade:117
+#: ../glade/ui.glade:269
+msgid "Name"
+msgstr ""
+
+#: ../src/crisk/inventoryview.py:219 ../glade/ui.glade:376
+#: ../src/crisk/reports/invent_report.py:46
+msgid "Owner"
+msgstr ""
+
+#: ../src/crisk/inventoryview.py:220 ../glade/ui.glade:339
+#: ../src/crisk/reports/invent_report.py:48
+msgid "Value"
+msgstr ""
+
+#: ../src/crisk/inventoryview.py:240
+msgid "Really delete the selected asset?\n"
+msgstr ""
+
+#: ../src/crisk/inventoryview.py:241
+msgid "This action can't be undone!"
+msgstr ""
+
+#: ../src/crisk/mainview.py:85
+msgid "Step"
+msgstr ""
+
+#: ../src/crisk/mainview.py:88
+msgid "Basic Data"
+msgstr ""
+
+#: ../src/crisk/mainview.py:89
+msgid "Target Information"
+msgstr ""
+
+#: ../src/crisk/mainview.py:91 ../glade/ui.glade:480
+msgid "Inventory"
+msgstr ""
+
+#: ../src/crisk/mainview.py:92 ../glade/ui.glade:412 ../glade/ui.glade:662
+msgid "Vulnerabilities"
+msgstr ""
+
+#: ../src/crisk/mainview.py:111
+msgid ""
+"Do you want to open a previous file?\n"
+"\n"
+msgstr ""
+
+#: ../src/crisk/mainview.py:112
+msgid "Choose 'Yes' to open a previous work, or\n"
+msgstr ""
+
+#: ../src/crisk/mainview.py:113
+msgid "choose 'No' if you want to create a new DB"
+msgstr ""
+
+#: ../src/crisk/mainview.py:162
+msgid "A simple risk management tool"
+msgstr ""
+
+#: ../src/crisk/mainview.py:171
+msgid "Open"
+msgstr ""
+
+#: ../src/crisk/mainview.py:184
+msgid "Error opening database"
+msgstr ""
+
+#: ../src/crisk/mainview.py:187
+msgid "Save"
+msgstr ""
+
+#: ../src/crisk/mainview.py:206
+msgid "An error has ocurred"
+msgstr ""
+
+#: ../src/crisk/mainview.py:210 ../src/crisk/mainview.py:222
+msgid "Save report"
+msgstr ""
+
+#: ../src/crisk/mainview.py:211
+msgid "Inventory Report.pdf"
+msgstr ""
+
+#: ../src/crisk/mainview.py:223
+msgid "Total Vulnerability Risk Report.pdf"
+msgstr ""
+
+#: ../src/crisk/vulnerabilitiesview.py:60
+#: ../src/crisk/reports/vuln_report.py:43
+msgid "Severity"
+msgstr ""
+
+#: ../src/crisk/vulnerabilitiesview.py:62
+#: ../src/crisk/reports/vuln_report.py:45
+msgid "Probability"
+msgstr ""
+
+#: ../src/crisk/vulnerabilitiesview.py:75
+msgid "Enter description..."
+msgstr ""
+
+#: ../glade/ui.glade:40
+msgid "_File"
+msgstr ""
+
+#: ../glade/ui.glade:41
+msgid "File"
+msgstr ""
+
+#: ../glade/ui.glade:47
+msgid "_Help"
+msgstr ""
+
+#: ../glade/ui.glade:48
+msgid "Help"
+msgstr ""
+
+#: ../glade/ui.glade:55
+msgid "_Inventory Report"
+msgstr ""
+
+#: ../glade/ui.glade:62
+msgid "_Total Vulnerability Risk Report"
+msgstr ""
+
+#: ../glade/ui.glade:69
+msgid "_Total Asset Risk Report"
+msgstr ""
+
+#: ../glade/ui.glade:88
+msgid "_Reports"
+msgstr ""
+
+#: ../glade/ui.glade:104
+msgid "Basic Information"
+msgstr ""
+
+#: ../glade/ui.glade:148
+msgid "Location"
+msgstr ""
+
+#: ../glade/ui.glade:180
+msgid "Initial Date"
+msgstr ""
+
+#: ../glade/ui.glade:212
+msgid "Scope"
+msgstr ""
+
+#: ../glade/ui.glade:257
+msgid "Add asset to inventory"
+msgstr ""
+
+#: ../glade/ui.glade:553
+msgid "Crisk"
+msgstr ""
+
+#: ../src/crisk/reports/graphs.py:56
+msgid "Number of assets per owner"
+msgstr ""
+
+#: ../src/crisk/reports/graphs.py:76
+msgid "Value of assets per owner"
+msgstr ""
+
+#: ../src/crisk/reports/graphs.py:119
+msgid "Risk Matrix"
+msgstr ""
+
+#: ../src/crisk/reports/invent_report.py:42
+msgid "Inventory Report"
+msgstr ""
+
+#: ../src/crisk/reports/invent_report.py:44
+msgid "Asset"
+msgstr ""
+
+#: ../src/crisk/reports/invent_report.py:71
+msgid "Number of Assets:"
+msgstr ""
+
+#: ../src/crisk/reports/invent_report.py:76
+msgid "Total Value:"
+msgstr ""
+
+#: ../src/crisk/reports/invent_report.py:88
+#: ../src/crisk/reports/vuln_report.py:105
+msgid "Created by Crisk"
+msgstr ""
+
+#: ../src/crisk/reports/invent_report.py:89
+#: ../src/crisk/reports/vuln_report.py:106
+#, python-format
+msgid "Page # %(page_number)d of %(page_count)d"
+msgstr ""
+
+#: ../src/crisk/reports/vuln_report.py:38
+msgid "Total Vulnerability Report"
+msgstr ""
+
+#: ../src/crisk/reports/vuln_report.py:41
+msgid "Vulnerability"
+msgstr ""
+
+#: ../src/crisk/reports/vuln_report.py:47
+msgid "Risk"
+msgstr ""
+
+#: ../src/crisk/reports/vuln_report.py:73
+msgid "Number of Vulnerabilities:"
+msgstr ""
+
+#: ../src/crisk/reports/vuln_report.py:80
+msgid "Maximum Risk:"
+msgstr ""
+
+#: ../src/crisk/reports/vuln_report.py:86
+msgid "Minimum Risk:"
+msgstr ""
+
+#: ../src/crisk/reports/vuln_report.py:92
+msgid "Average Risk:"
+msgstr ""

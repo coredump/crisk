@@ -25,6 +25,7 @@ This module provides the Vulnerabilities slave view and list.
 """
 
 import gtk
+import gettext
 
 from kiwi.ui.delegates import GladeDelegate, GladeSlaveDelegate, ProxyDelegate
 from kiwi.ui.objectlist import ObjectList, Column
@@ -34,6 +35,7 @@ from kiwi.ui.dialogs import yesno
 from model import *
 from elixir import *
 
+_ = gettext.gettext
 
 class VulnerabilitiesView(GladeSlaveDelegate):
     """
@@ -42,6 +44,7 @@ class VulnerabilitiesView(GladeSlaveDelegate):
     :param parent: The parent mainview to be used as parent for dialogs.
     :type parent: View
     """
+    
     def __init__(self, parent):
         
         self.__parent = parent
@@ -52,11 +55,11 @@ class VulnerabilitiesView(GladeSlaveDelegate):
         
         self.list = self.get_widget('list_vulnerability')
 
-        cols = [ Column('description', title = 'Description', data_type = unicode,
+        cols = [ Column('description', title = _('Description'), data_type = unicode,
                         expand = True, sorted = True, editable = True),
-                 Column('severity', title = 'Severity', data_type = int,
+                 Column('severity', title = _('Severity'), data_type = int,
                         editable = True),
-                 Column('chance', title = 'Probability', data_type = int,
+                 Column('chance', title = _('Probability'), data_type = int,
                         editable = True) ]
         
         self.list.set_columns(cols)
@@ -69,7 +72,7 @@ class VulnerabilitiesView(GladeSlaveDelegate):
                 
     def on_vuln_add__clicked(self, *args):
         
-        new_vuln = Vulnerability(description = 'Enter description...', chance = 0,
+        new_vuln = Vulnerability(description = _('Enter description...'), chance = 0,
                                  severity = 0)
         self.list.append(new_vuln)
         

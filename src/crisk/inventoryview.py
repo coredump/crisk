@@ -26,6 +26,7 @@ Asset inventory view.
 """
 
 import gtk
+import gettext
 
 from kiwi.ui.delegates import GladeDelegate, GladeSlaveDelegate, ProxyDelegate
 from kiwi.ui.objectlist import ObjectList, Column
@@ -34,6 +35,8 @@ from kiwi.model import Model
 from kiwi.ui.dialogs import yesno
 from model import *
 from elixir import *
+
+_ = gettext.gettext
 
 class vuln:
     """
@@ -209,12 +212,12 @@ class InventoryView(GladeSlaveDelegate):
                                     gladefile = 'ui',
                                     toplevel_name = 'InventoryWindow')
         self.list = self.get_widget('invent_list')
-        cols = [ Column('name', title = 'Name', data_type = unicode, 
+        cols = [ Column('name', title = _('Name'), data_type = unicode, 
                         searchable = True, sorted = True),
-                 Column('description', title = 'Description', data_type = unicode, 
+                 Column('description', title = _('Description'), data_type = unicode, 
                         expand = True),
-                 Column('owner', title = 'Owner', data_type = unicode),
-                 Column('value', title = 'Value', data_type = currency)]
+                 Column('owner', title = _('Owner'), data_type = unicode),
+                 Column('value', title = _('Value'), data_type = currency)]
         self.list.set_columns(cols)
         self.populate_list()
         
@@ -234,8 +237,8 @@ class InventoryView(GladeSlaveDelegate):
         add_view.show(self.__parent)
         
     def on_button_del__clicked(self, *args):
-        result = yesno('Really delete the selected asset?\n' + 
-                       'This action can\'t be undone!')
+        result = yesno(_('Really delete the selected asset?\n') + 
+                       _('This action can\'t be undone!'))
         if result == gtk.RESPONSE_YES:
             selected = self.list.get_selected()
             selected.delete()

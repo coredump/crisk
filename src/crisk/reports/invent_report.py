@@ -19,6 +19,8 @@
 #    along with Crisk.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import gettext
+import crisk
 
 from geraldo import *
 from geraldo.generators import PDFGenerator
@@ -30,25 +32,21 @@ from reportlab.lib.units import cm
 from crisk.model import *
 from graphs import InventoryOwnerGraph
 
+_ = gettext.gettext
+
 graphs = InventoryOwnerGraph()
-
-
-class BandBegin(ReportBand):
-    height = 1*cm
-    elements = [
-                Label(text = "Inventory Report"),
-                ]
 
 class BandHeader(ReportBand):
     height = 1.5*cm
     elements = [
-                SystemField(expression='%(report_title)s', 
+                Label(text=_('Inventory Report'), 
+                            width = 13*cm,
                             style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 16 }),
-                Label(text = 'Asset', top = 1*cm, left = 0.5*cm,
+                Label(text = _('Asset'), top = 1*cm, left = 0.5*cm,
                       style = {'fontName' : 'Helvetica-Bold'}),
-                Label(text = 'Owner', top = 1*cm, left = 7*cm,
+                Label(text = _('Owner'), top = 1*cm, left = 7*cm,
                       style = {'fontName' : 'Helvetica-Bold'}),
-                Label(text = 'Value', top = 1*cm, bottom = 0.3*cm, left = 13*cm,
+                Label(text = _('Value'), top = 1*cm, bottom = 0.3*cm, left = 13*cm,
                       style = {'fontName' : 'Helvetica-Bold'})
                 ]
     borders = {'bottom' : True}
@@ -64,7 +62,6 @@ class BandDetail(ReportBand):
                             top = 0.2*cm,
                             get_value = lambda val: currency(val.value).format(True, 2))
                 )
-    #borders = {'all': True}
 
 class BandSummary(ReportBand):
     owners = Owner.query().all()
@@ -72,17 +69,16 @@ class BandSummary(ReportBand):
     
     height = 1*cm
     elements = [
-                Label(text = 'Number of Assets:', top = 0.3*cm, left = 0.5*cm, 
+                Label(text = _('Number of Assets:'), top = 0.3*cm, left = 0.5*cm, 
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
                 ObjectValue(attribute_name = 'name', top = 0.3*cm, left = 5*cm, 
                       action = FIELD_ACTION_COUNT,
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
-                Label(text = 'Total Value:', top = 0.3*cm, left = 10*cm, 
+                Label(text = _('Total Value:'), top = 0.3*cm, left = 10*cm, 
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),                      
                 ObjectValue(attribute_name = 'value', top = 0.3*cm, left = 13*cm, 
                       action = FIELD_ACTION_SUM,
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
-                      #get_value = lambda val: currency(val.value).format(True, 2))
                 Image(filename = graph_assets_per_owner.name, top = 1*cm, left = 2*cm)
                 ]
     borders = {'top' : True }
@@ -90,15 +86,14 @@ class BandSummary(ReportBand):
 class BandFooter(ReportBand):
     height = 0.5*cm
     elements = [
-    Label(text='Created by Crisk', top=0.1*cm, left=0),
-            SystemField(expression='Page # %(page_number)d of %(page_count)d', top=0.1*cm,
+    Label(text=_('Created by Crisk'), top=0.1*cm, left=0),
+            SystemField(expression=_('Page # %(page_number)d of %(page_count)d'), top=0.1*cm,
             width=BAND_WIDTH, style={'alignment': TA_RIGHT}),
     ]
     borders = {'top': True}
 
 
 class InventoryReport(Report):
-    title = 'Inventory Report'
 
     page_size = A4
     margin_left = 2*cm
@@ -108,7 +103,5 @@ class InventoryReport(Report):
 
     band_summary = BandSummary()
     band_page_header = BandHeader()
-    #band_begin = BandBegin()
     band_detail = BandDetail()
     band_page_footer = BandFooter()
-    

@@ -18,12 +18,16 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Crisk.  If not, see <http://www.gnu.org/licenses/>.
 
+import gettext
+
 from tempfile import NamedTemporaryFile
 from pylab import *
 from elixir import *
 from sqlalchemy import select, func
 
 from crisk.model import *
+
+_ = gettext.gettext
 
 general_colors = ( 'b', 'g', 'r', 'c', 'm', 'y', '#008B8B', '#B8860B', '#DAA520', 
                   '#4B0082', '#191970', '#FF4500', '#BC8F8F', '#CD853F')
@@ -35,8 +39,7 @@ def do_percent(part, total):
 class InventoryOwnerGraph:
     
     def do_assets_per_owner(self, owners):
-        figure(1, figsize=(6,6), facecolor = 'w')
-        #ax = axes([0.1, 0.1, 0.8, 0.8])
+        figure(dpi = 300, figsize=(6,6), facecolor = 'w')
         total_assets = Asset.query().count()
         labels = []
         percents = []
@@ -50,34 +53,17 @@ class InventoryOwnerGraph:
 
         pie(percents, explode=None, labels=labels, autopct='%1.1f%%', 
             shadow=True, colors = general_colors)
-        title('Number of assets per owner')
+        title(unicode(_('Number of assets per owner')))
 
         tmp_file = NamedTemporaryFile()
-#        tmp_file = open('temp.png', 'w+b')
         tmp_file.close()
         savefig(tmp_file.name, format = 'png', transparent = True)
         return tmp_file
 
-    def do_value_per_owner(self, owners):
-        fig = figure(facecolor = 'w')
-        ax = fig.add_subplot(111)
-        
-        labels = []
-        values = []
-        for item in owners:
-            val_assets = sum([x.value for x in item.assets])
-            labels.append(item.name)
-            values.append(val_assets)
-
-        ind = range(len(labels))
-        ax.bar(ind, values, 0.35, color = 'r')
-        ax.set_title('Value of assets per owner')
-        ax.set_xticklabels(labels, rotation = 'vertical')
-
 class VulnGraph:
     
     def do_total_vuln_graph(self, vulns):
-        fig = figure(1, figsize=(5,5), facecolor = 'w')
+        fig = figure(dpi = 300, figsize=(5,5), facecolor = 'w')
         axes = Axes(fig, [.2, .1, .7, .8])
         axes.autoscale_view()
         axes.set_autoscale_on(True)
@@ -114,7 +100,7 @@ class VulnGraph:
         axvspan(2, 5.2, 4/ax_max, 5.2/ax_max, facecolor = 'r', alpha = 0.2, lw = 0)
         axvspan(3, 5.2, 3/ax_max, 4/ax_max, facecolor = 'r', alpha = 0.2, lw = 0)
         axvspan(4, 5.2, 3/ax_max, 2/ax_max, facecolor = 'r', alpha = 0.2, lw = 0)
-        title('Risk Matrix')
+        title(_('Risk Matrix'))
         
         tmp_file = NamedTemporaryFile()
 #        tmp_file = open('temp.png', 'w+b')

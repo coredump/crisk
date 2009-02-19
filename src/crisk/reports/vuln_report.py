@@ -19,6 +19,7 @@
 #    along with Crisk.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import gettext
 
 from geraldo import *
 from geraldo.generators import PDFGenerator
@@ -29,19 +30,21 @@ from reportlab.lib.units import cm
 from crisk.model import *
 from crisk.reports.graphs import VulnGraph 
 
+_ = gettext.gettext
+
 class BandHeader(ReportBand):
     height = 1.5*cm
     elements = [
-                SystemField(expression='%(report_title)s', 
+                Label(text=_('Total Vulnerability Report'), 
                             width = 13*cm,
                             style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 16 }),
-                Label(text = 'Vulnerability', top = 1*cm, left = 0.5*cm,
+                Label(text = _('Vulnerability'), top = 1*cm, left = 0.5*cm,
                       style = {'fontName' : 'Helvetica-Bold'}),
-                Label(text = 'Severity', top = 1*cm, left = 11*cm,
+                Label(text = _('Severity'), top = 1*cm, left = 11*cm,
                       style = {'fontName' : 'Helvetica-Bold'}),
-                Label(text = 'Probability', top = 1*cm, bottom = 0.3*cm, left = 13*cm,
+                Label(text = _('Probability'), top = 1*cm, bottom = 0.3*cm, left = 13*cm,
                       style = {'fontName' : 'Helvetica-Bold'}),
-                Label(text = 'Risk', top = 1*cm, bottom = 0.3*cm, left = 16*cm,
+                Label(text = _('Risk'), top = 1*cm, bottom = 0.3*cm, left = 16*cm,
                       style = {'fontName' : 'Helvetica-Bold'})
                 ]
     borders = {'bottom' : True}
@@ -59,7 +62,6 @@ class BandDetail(ReportBand):
                             top = 0.2*cm,
                             style = {'fontSize' : 13 })
                 )
-    #borders = {'all': True}
 
 class BandSummary(ReportBand):
     graphs = VulnGraph()
@@ -68,26 +70,26 @@ class BandSummary(ReportBand):
     
     height = 1*cm
     elements = [
-                Label(text = 'Number of Vulnerabilities:', top = 0.3*cm, left = 0.5*cm, 
+                Label(text = _('Number of Vulnerabilities:'), top = 0.3*cm, left = 0.5*cm, 
                       width = 10*cm,
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
                 ObjectValue(attribute_name = 'description', top = 0.3*cm, left = 7*cm, 
                       action = FIELD_ACTION_COUNT,
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
                 
-                Label(text = 'Maximum Risk:', top = 0.8*cm, left = 0.5*cm, 
+                Label(text = _('Maximum Risk:'), top = 0.8*cm, left = 0.5*cm, 
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),                      
                 ObjectValue(attribute_name = 'total_risk', top = 0.8*cm, left = 7*cm, 
                       action = FIELD_ACTION_MAX,
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
 
-                Label(text = 'Minimum Risk:', top = 1.3*cm, left = 0.5*cm, 
+                Label(text = _('Minimum Risk:'), top = 1.3*cm, left = 0.5*cm, 
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),                      
                 ObjectValue(attribute_name = 'total_risk', top = 1.3*cm, left = 7*cm, 
                       action = FIELD_ACTION_MIN,
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
                 
-                Label(text = 'Average Risk:', top = 1.8*cm, left = 0.5*cm, 
+                Label(text = _('Average Risk:'), top = 1.8*cm, left = 0.5*cm, 
                       style = {'fontName' : 'Helvetica-Bold', 'fontSize' : 12}),
                 ObjectValue(attribute_name = 'total_risk', top = 1.8*cm, left = 7*cm, 
                       action = FIELD_ACTION_AVG,
@@ -100,15 +102,14 @@ class BandSummary(ReportBand):
 class BandFooter(ReportBand):
     height = 0.5*cm
     elements = [
-    Label(text='Created by Crisk', top=0.1*cm, left=0),
-            SystemField(expression='Page # %(page_number)d of %(page_count)d', top=0.1*cm,
+    Label(text=_('Created by Crisk'), top=0.1*cm, left=0),
+            SystemField(expression=_('Page # %(page_number)d of %(page_count)d'), top=0.1*cm,
             width=BAND_WIDTH, style={'alignment': TA_RIGHT}),
     ]
     borders = {'top': True}
 
 
 class TotalVulnReport(Report):
-    title = 'Total Vulnerability Report'
 
     page_size = A4
     margin_left = 2*cm
@@ -120,4 +121,3 @@ class TotalVulnReport(Report):
     band_detail = BandDetail()
     band_summary = BandSummary()
     band_page_footer = BandFooter()
-    

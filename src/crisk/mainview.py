@@ -108,9 +108,9 @@ class MainView(GladeDelegate):
         Shows a dialog with options for opening a file or creating a new one. Used
         on the startup to provide a ``db_file``
         """
-        result = yesno(_('Do you want to open a previous file?\n\n' + 
-                       'Choose \'Yes\' to open a previous work, or\n' + 
-                       'choose \'No\' if you want to create a new DB')) 
+        result = yesno(_('Do you want to open a previous file?\n\n') + 
+                       _('Choose \'Yes\' to open a previous work, or\n') + 
+                       _('choose \'No\' if you want to create a new DB')) 
         if result == gtk.RESPONSE_YES:
             res = self.on_open__activate()
             if res is None:
