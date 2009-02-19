@@ -30,6 +30,7 @@ import gtk
 import pygtk
 import sys, os
 import kiwi.environ
+import gettext
 
 from elixir import *
 from os import path
@@ -39,6 +40,7 @@ from kiwi.ui.objectlist import Column, ObjectList
 from kiwi.currency import currency
 from kiwi.ui.widgets import textview, label, entry
 from kiwi.ui.delegates import GladeDelegate, GladeSlaveDelegate, ProxySlaveDelegate
+from kiwi.environ import environ
 from geraldo.generators import PDFGenerator
 
 # Pedacos do programa
@@ -49,13 +51,7 @@ from basicsview import BasicsView
 from inventoryview import InventoryView
 from vulnerabilitiesview import VulnerabilitiesView
 
-
-# Adicionando paths para achar os resources
-
-if not hasattr(sys, 'frozen'):
-    cwd = os.getcwd()
-    standalone_path = os.path.join(cwd, 'crisk')
-    kiwi.environ.environ.add_resource('glade', standalone_path)
+_ = gettext.gettext
 
 class Step:
     """    
@@ -86,19 +82,23 @@ class MainView(GladeDelegate):
                                delete_handler = self.on_exit__activate)        
         self.tree = self.get_widget('maintree')        
         tree = self.tree
-        cols =  [ Column('name', title='Step', data_type = str, expand = True) ]
+        cols =  [ Column('name', title=_('Step'), data_type = str, expand = True) ]
         tree.set_columns(cols)
         tree.set_headers_visible(False)
-        basics = tree.append(None, Step('Basic Data', 0))
-        first = tree.append(basics, Step('Target Information', 1))
+        basics = tree.append(None, Step(_('Basic Data'), 0))
+        first = tree.append(basics, Step(_('Target Information'), 1))
         self.first = first
-        tree.append(basics, Step('Inventory', 2))
-        tree.append(basics, Step('Vulnerabilities', 3))
+        tree.append(basics, Step(_('Inventory'), 2))
+        tree.append(basics, Step(_('Vulnerabilities'), 3))
         tree.expand(basics)
 #        reports = tree.append(None, Step('Results', 4))
 #        self.first_report = tree.append(reports, Step('Inventory Report', 5))
 #        tree.expand(reports)
 #        tree.select(self.first)
+
+        icon = environ.find_resource('pixmaps', 'criskicon.png')
+        __window = self.get_widget('MainWindow')
+        __window.set_icon_from_file(icon)
 
         if self.db_file is None:
             self.open_or_new()   
@@ -108,9 +108,9 @@ class MainView(GladeDelegate):
         Shows a dialog with options for opening a file or creating a new one. Used
         on the startup to provide a ``db_file``
         """
-        result = yesno('Do you want to open a previous file?\n\n' + 
+        result = yesno(_('Do you want to open a previous file?\n\n' + 
                        'Choose \'Yes\' to open a previous work, or\n' + 
-                       'choose \'No\' if you want to create a new DB') 
+                       'choose \'No\' if you want to create a new DB')) 
         if result == gtk.RESPONSE_YES:
             res = self.on_open__activate()
             if res is None:
@@ -156,8 +156,8 @@ class MainView(GladeDelegate):
         diag.set_version(crisk.__version__)
         diag.set_copyright('Copyright 2009 - José de Paula E. Júnior')
         diag.set_authors(['José de Paula E. Júnior <jose.junior@gmail.com>'])
-        diag.set_comments('A simple risk management tool')
-        diag.set_website('https://www.assembla.com/spaces/crisk')
+        diag.set_comments(_('A simple risk management tool'))
+        diag.set_website('https://coredump.github.com/crisk')
         diag.set_license(crisk.__license__)
         x = diag.run()
         diag.hide()
@@ -165,7 +165,7 @@ class MainView(GladeDelegate):
     def on_open__activate(self, *args):
         filter = gtk.FileFilter()
         filter.add_pattern('*.crisk')
-        selected_file = open_dialog('Open', filter = filter)
+        selected_file = open_dialog(_('Open'), filter = filter)
         if selected_file is None:
             return None
         try:
@@ -178,10 +178,10 @@ class MainView(GladeDelegate):
             self.tree.select(self.first)
             return True
         except Exception, info:
-            error('Error opening database', str(info))
+            error(_('Error opening database'), str(info))
         
     def on_new__activate(self, *args):
-        new_file = save('Save')        
+        new_file = save(_('Save'))        
         if new_file is None:
             return None
 
@@ -200,12 +200,12 @@ class MainView(GladeDelegate):
             self.tree.select(self.first)
             return True
         except Exception, info:
-            res = error("An error has ocurred", info.__str__())
+            res = error(_("An error has ocurred"), info.__str__())
     
     def on_inventory_report__activate(self, *args):
         from crisk.reports.invent_report import InventoryReport
-        filename = save('Save report',
-                        current_name = "Inventory Report.pdf")
+        filename = save(_('Save report'),
+                        current_name = _('Inventory Report.pdf'))
         if filename is not None:
             assets = Asset.query().all()
             report = InventoryReport(queryset = assets)
@@ -216,8 +216,8 @@ class MainView(GladeDelegate):
     
     def on_total_vuln_report__activate(self, *args):
         from crisk.reports.vuln_report import TotalVulnReport
-        filename = save('Save report',
-                        current_name = "Total Vulnerability Risk Report.pdf")
+        filename = save(_('Save report'),
+                        current_name = _('Total Vulnerability Risk Report.pdf'))
         if filename is not None:
             vulns = Vulnerability.query().all()
             report = TotalVulnReport(queryset = vulns)

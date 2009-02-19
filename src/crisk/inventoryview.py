@@ -133,9 +133,9 @@ class InventoryAddEdit(ProxyDelegate):
                                delete_handler = self.dialog_delete)  
 
         # Arvore de vulnerabilidades
-        cols = [ Column('description', title = 'Description', data_type = unicode, 
+        cols = [ Column('description', title = _('Description'), data_type = unicode, 
                         expand = True),
-                 Column('state', title = 'Applicable?', data_type = bool, 
+                 Column('state', title = _('Applicable?'), data_type = bool, 
                         editable = True)]
         
         self.tree = self.get_widget('invent_vuln_list')

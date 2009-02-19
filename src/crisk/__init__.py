@@ -17,11 +17,22 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
-
-
 """ 
 This is the basic package for the Crisk Application.
 """ 
+
+import sys
+import os
+from kiwi.environ import Library
+
+# Adicionando paths para achar os resources
+
+lib = Library('kiwi')
+standalone_path = os.path.dirname(__file__)
+if not hasattr(sys, 'frozen'):
+    lib.add_global_resource('glade', 'glade')
+    lib.add_global_resource('pixmaps', 'pixmaps')
+    #environ.environ.add_resource('glade', standalone_path)
 
 __version__ = '0.2'
 __license__ = """
