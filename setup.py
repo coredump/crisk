@@ -18,17 +18,34 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-from distutils.core import setup
-import py2exe
+
+import os
 import sys
+if os.name == 'win32':
+    import py2exe
+
+from kiwi.dist import listfiles, listpackages
+from distutils.core import setup
+
 
 sys.path.append('src/')
 
 setup(
     name = 'crisk',
     description = 'Simple Risk Management Tool',
-    version = '0.1',
-
+    version = '0.3',
+    author = 'José de Paula E. Júnior (coredump)',
+    author_email = 'jose.junior@gmail.com',
+    long_description = """
+    Crisk is a simple tool for Risk Management, aimed at security officers,
+    security consultants and risk professionals.
+    """,
+    url = 'http://coredump.github.com/crisk',
+    license = 'GNU GPLv3 (see COPYING)',
+    
+    scripts = [
+		  'bin/crisk'
+	      ],
     windows = [
                   {
                       'script': 'src/crisk.py',
@@ -42,9 +59,8 @@ setup(
                       'includes': 'cairo, pango, pangocairo, atk, gobject, geraldo, elixir',
                   }
               },
-
     data_files=[
-                   ('glade', ['src/crisk/ui.glade']),
+                   ('glade', ['glade/ui.glade']),
                    'src/COPYING'
                ]
 )
