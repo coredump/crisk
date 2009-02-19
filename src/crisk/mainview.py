@@ -152,6 +152,9 @@ class MainView(GladeDelegate):
                         
     def on_about__activate(self, *args):
         diag = gtk.AboutDialog()
+        logofile = environ.find_resource('pixmaps', 'aboutlogo.png')
+        logo = gtk.gdk.pixbuf_new_from_file(logofile)
+        diag.set_logo(logo)
         diag.set_name('Crisk')
         diag.set_version(crisk.__version__)
         diag.set_copyright('Copyright 2009 - José de Paula E. Júnior')

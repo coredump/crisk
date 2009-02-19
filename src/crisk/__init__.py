@@ -23,16 +23,15 @@ This is the basic package for the Crisk Application.
 
 import sys
 import os
-from kiwi.environ import Library
+from kiwi.environ import Application
 
 # Adicionando paths para achar os resources
 
-lib = Library('kiwi')
-standalone_path = os.path.dirname(__file__)
+app = Application('crisk')
+app.enable_translation()
 if not hasattr(sys, 'frozen'):
-    lib.add_global_resource('glade', 'glade')
-    lib.add_global_resource('pixmaps', 'pixmaps')
-    #environ.environ.add_resource('glade', standalone_path)
+    app.add_global_resource('glade', 'glade')
+    app.add_global_resource('pixmaps', 'pixmaps')
 
 __version__ = '0.2'
 __license__ = """
