@@ -31,10 +31,11 @@ app = Application('crisk')
 dir = os.path.dirname(__file__)
 rdir = os.path.abspath(os.path.join(dir, '../../'))
 
-if not hasattr(sys, 'frozen'):
-    if app.uninstalled:
-        app.add_global_resource('glade', os.path.join(rdir, 'glade'))
-        app.add_global_resource('pixmaps', os.path.join(rdir, 'pixmaps'))
+if app.uninstalled:
+#    app.add_global_resource('glade', os.path.join(rdir, 'glade'))
+#    app.add_global_resource('pixmaps', os.path.join(rdir, 'pixmaps'))
+    app.add_global_resource('glade', 'glade')
+    app.add_global_resource('pixmaps', 'pixmaps')
 
 app.enable_translation()
 app.set_application_domain('crisk')

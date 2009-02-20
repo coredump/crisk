@@ -21,7 +21,7 @@
 
 import os
 import sys
-if os.name == 'win32':
+if os.name in ['win32', 'windows', 'nt']:
     import py2exe
 
 depends = ['geraldo', 'kiwi', 'elixir', 'reportlab', 'matplotlib', 'pygtk']
@@ -39,18 +39,16 @@ data_files = [
      listfiles('pixmaps', '*.*')),
     ('$datadir/glade',
      listfiles('glade', '*.glade')),
-    ('share/doc/crisk',
-     ['src/COPYING', 'src/README'])]
+    ]
 
-#resources = dict(
-#    locale='$prefix/share/locale',
-#    basedir='$prefix')
+resources = dict(
+    locale='$prefix/share/locale')
 
 global_resources = dict(
     pixmaps='$datadir/pixmaps',
     glade='$datadir/glade',
-    docs='$prefix/share/doc/stoq',
-    locale = '$prefix/share/locale')
+    docs='$prefix/share/doc/crisk',
+    )
 
 packages = ['crisk', 'crisk.reports']
 package_dir = {'crisk' : 'src/crisk', 
@@ -77,7 +75,7 @@ setup(
     package_dir = package_dir,
     scripts = scripts,
     data_files = data_files,
-#    resources = resources,
+    resources = resources,
     global_resources = global_resources,
     
     windows = [
