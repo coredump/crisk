@@ -24,11 +24,41 @@ import sys
 if os.name == 'win32':
     import py2exe
 
-from kiwi.dist import listfiles, listpackages
-from distutils.core import setup
+depends = ['geraldo', 'kiwi', 'elixir', 'reportlab', 'matplotlib', 'pygtk']
 
+for mod in depends:
+    try:
+        __import__(mod)
+    except ImportError:
+        raise SystemError('Module %s on the latest version is required to run crisk.' % mod)
+        
+from kiwi.dist import listfiles, listpackages, setup
 
-sys.path.append('src/')
+data_files = [
+    ('$datadir/pixmaps',
+     listfiles('pixmaps', '*.*')),
+    ('$datadir/glade',
+     listfiles('glade', '*.glade')),
+    ('share/doc/crisk',
+     ['src/COPYING', 'src/README'])]
+
+#resources = dict(
+#    locale='$prefix/share/locale',
+#    basedir='$prefix')
+
+global_resources = dict(
+    pixmaps='$datadir/pixmaps',
+    glade='$datadir/glade',
+    docs='$prefix/share/doc/stoq',
+    locale = '$prefix/share/locale')
+
+packages = ['crisk', 'crisk.reports']
+package_dir = {'crisk' : 'src/crisk', 
+               'crisk.reports' : 'src/crisk/reports'}
+
+scripts = [
+               'src/crisk.py'
+          ]
 
 setup(
     name = 'crisk',
@@ -43,9 +73,13 @@ setup(
     url = 'http://coredump.github.com/crisk',
     license = 'GNU GPLv3 (see COPYING)',
     
-    scripts = [
-		  'bin/crisk'
-	      ],
+    packages = packages,
+    package_dir = package_dir,
+    scripts = scripts,
+    data_files = data_files,
+#    resources = resources,
+    global_resources = global_resources,
+    
     windows = [
                   {
                       'script': 'src/crisk.py',
@@ -56,11 +90,7 @@ setup(
     options = {
                   'py2exe': {
                       'packages':'encodings, crisk, sqlalchemy.databases.sqlite',
-                      'includes': 'cairo, pango, pangocairo, atk, gobject, geraldo, elixir',
+                      'includes': 'cairo, pango, pangocairo, atk, gobject, geraldo, elixir, matplotlib',
                   }
-              },
-    data_files=[
-                   ('glade', ['glade/ui.glade']),
-                   'src/COPYING'
-               ]
+              }
 )
