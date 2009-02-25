@@ -24,6 +24,8 @@ import sys
 if os.name in ['win32', 'windows', 'nt']:
     import py2exe
 
+from glob import glob
+
 depends = ['geraldo', 'kiwi', 'elixir', 'reportlab', 'matplotlib', 'pygtk']
 
 for mod in depends:

@@ -31,7 +31,6 @@ class ReportView(GladeSlaveDelegate):
     def __init__(self, parent, reptype = None):
     
             GladeSlaveDelegate.__init__(self, "ui", toplevel_name = 'ReportWindow')
-            
             dic_reps = {'inventory' : self._inventory_report }
             
             print 'AAAAAAA', dic_reps
