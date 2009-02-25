@@ -23,22 +23,21 @@ This is the basic package for the Crisk Application.
 
 import sys
 import os
-from kiwi.environ import Application
+from kiwi.environ import Library
 
 # Adicionando paths para achar os resources
 
-app = Application('crisk')
+lib = Library('crisk', '../../')
 dir = os.path.dirname(__file__)
 rdir = os.path.abspath(os.path.join(dir, '../../'))
 
-if app.uninstalled:
-#    app.add_global_resource('glade', os.path.join(rdir, 'glade'))
-#    app.add_global_resource('pixmaps', os.path.join(rdir, 'pixmaps'))
-    app.add_global_resource('glade', 'glade')
-    app.add_global_resource('pixmaps', 'pixmaps')
+if lib.uninstalled:
+    lib.add_global_resource('glade', 'glade')
+    lib.add_global_resource('pixmaps', 'pixmaps')
+    lib.add_global_resource('locale', 'locale')
 
-app.enable_translation()
-app.set_application_domain('crisk')
+lib.enable_translation()
+lib.set_application_domain('crisk')
 
 __url__ = 'http://coredump.github.com/crisk/'
 __version__ = '0.2'

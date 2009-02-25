@@ -41,18 +41,20 @@ data_files = [
      listfiles('pixmaps', '*.*')),
     ('$datadir/glade',
      listfiles('glade', '*.glade')),
+    ('share/locale/pt_BR/LC_MESSAGES', 
+      [ 'locale/pt_BR/LC_MESSAGES/crisk.mo' ] ),
+    ('share/doc/crisk', 
+      listfiles('docs', '*')),
     ]
-
-resources = dict(
-    locale='$prefix/share/locale')
 
 global_resources = dict(
     pixmaps='$datadir/pixmaps',
     glade='$datadir/glade',
-    docs='$prefix/share/doc/crisk',
+    locale='share/locale/'
     )
 
 packages = ['crisk', 'crisk.reports']
+
 package_dir = {'crisk' : 'src/crisk', 
                'crisk.reports' : 'src/crisk/reports'}
 
@@ -77,7 +79,6 @@ setup(
     package_dir = package_dir,
     scripts = scripts,
     data_files = data_files,
-    resources = resources,
     global_resources = global_resources,
     
     windows = [
