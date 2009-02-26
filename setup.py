@@ -21,10 +21,8 @@
 
 import os
 import sys
-import matplotlib
 import glob
-sys.path.append('./src')
-import crisk
+
 if os.name in ['win32', 'windows', 'nt']:
     import py2exe
 
@@ -35,6 +33,10 @@ for mod in depends:
         __import__(mod)
     except ImportError:
         raise SystemError('Module %s on the latest version is required to run crisk.' % mod)
+
+sys.path.append('./src')
+import crisk
+import matplotlib
         
 from kiwi.dist import listfiles, listpackages, setup
 
@@ -54,10 +56,15 @@ if os.name in ['win32', 'windows', 'nt']:
     data_files.extend(matplotlib.get_py2exe_datafiles())
     
     global_resources = dict(
-    pixmaps='pixmaps',
-    glade='glade',
-    locale='locale'
-    )
+        pixmaps='pixmaps',
+        glade='glade',
+        locale='locale'
+        )
+
+    resources = dict(
+        locale = 'locale',
+        basedir = '.')
+
     
 else:
     data_files = [
@@ -74,9 +81,12 @@ else:
     global_resources = dict(
         pixmaps='$datadir/pixmaps',
         glade='$datadir/glade',
-        locale='share/locale/'
+        docs='$prefix/share/doc/crisk'
         )
 
+    resources = dict(
+        locale = '$prefix/share/locale',
+        basedir = '$prefix')
 
 packages = ['crisk', 'crisk.reports']
 
@@ -88,7 +98,7 @@ scripts = [
           ]
 
 setup(
-    name = 'Crisk',
+    name = 'crisk',
     description = crisk.__shortdescription__,
     version = crisk.__version__,
     author = crisk.__author__,
@@ -102,6 +112,7 @@ setup(
     scripts = scripts,
     data_files = data_files,
     global_resources = global_resources,
+    resources = resources,
     
     windows = [
                   {
