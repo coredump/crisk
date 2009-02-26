@@ -26,6 +26,9 @@ import os
 import gtk.glade
 from kiwi.environ import Library
 
+#if os.name in ['win32', 'windows', 'nt']:
+#    sys.stderr = sys.stdout
+
 # Adicionando paths para achar os resources
 
 lib = Library('crisk', '../../')
@@ -37,8 +40,7 @@ if lib.uninstalled:
 lib.enable_translation('crisk')
 lib.set_application_domain('crisk')
 
-if os.name in ['win32', 'windows', 'nt']:
-    sys.stderr = open('nul:', 'w')
+
 
 __author__ = 'José de Paula E. Júnior (coredump)'
 __url__ = 'http://coredump.github.com/crisk/'
