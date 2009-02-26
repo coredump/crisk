@@ -17,6 +17,7 @@
         {%- block rootrellink %}
         <li><a href="{{ pathto('index') }}">{{ shorttitle }}</a>{{ reldelim1 }}</li>
         {%- endblock %}
+        <li><a href="http://core.lighthouseapp.com/projects/25415-crisk/">Issue Tracker</a>{{ reldelim1 }}</li>
         {%- for parent in parents %}
           <li><a href="{{ parent.link|e }}" accesskey="U">{{ parent.title }}</a>{{ reldelim1 }}</li>
         {%- endfor %}

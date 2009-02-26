@@ -17,14 +17,15 @@ Getting Crisk
 
 Crisk right now is avaiable on source form only. You may:
 
-* `Download a tarball <http://github.com/coredump/crisk/zipball/master>`_
-* `Download a zipfile <http://github.com/coredump/crisk/tarball/master>`_
+* `Download a tar or zip file from one of the tags (versions) <http://github.com/coredump/crisk/downloads>`_
 * Clone the git repository: ``$ git clone git://github.com/coredump/crisk``
+
+The tagged commits have at least a little guarantee of being working, the master commit may be broken sometimes (but I try hard only to commit working stuff).
 
 Dependencies
 ------------
 
-Crisk depends on some other modules that are right now kinda hard to package. To get Crisk working you will need:
+Crisk depends on some python modules, to get Crisk working you will need:
 
 * Matplotlib (0.98 or higher)
 * Reportlab (2.2 or higher)
@@ -34,6 +35,13 @@ Crisk depends on some other modules that are right now kinda hard to package. To
 * `Kiwi <http://www.async.com.br/projects/kiwi/>`_ 
 
 I suggest using your distribution packages when possible and `easy_install <http://peak.telecommunity.com/DevCenter/EasyInstall>`_ when everything else fails. Reportlab does not install correctly with ``easy_install`` so it is better do download and install from source. 
+
+Installing from source
+~~~~~~~~~~~~~~~~~~~~~~
+
+Crisk uses distutils to provide an easier install. **Don't try to install Crisk as an egg file**. Use ``setup.py`` to install Crisk to the right place, on linux (Ubuntu 9.04 and Debian Lenny) I use::
+
+$ sudo python setup.py install --root=/
 
 Installers and MS Windows
 ~~~~~~~~~~~~~~~~~~~~~~~~~
