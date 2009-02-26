@@ -42,6 +42,7 @@
           <a href="screenshots.html" title="Screenshots and examples"
              accesskey="N">next</a> |</li>
         <li><a href="">Crisk v0.3 documentation</a> &raquo;</li>
+        <li><a href="http://core.lighthouseapp.com/projects/25415-crisk/">Issue Tracker</a> &raquo;</li>
       </ul>
     </div>
       <div class="sphinxsidebar">
@@ -52,6 +53,7 @@
 <li><a class="reference external" href="#tickets-and-bug-reporting">Tickets and Bug Reporting</a></li>
 <li><a class="reference external" href="#getting-crisk">Getting Crisk</a><ul>
 <li><a class="reference external" href="#dependencies">Dependencies</a><ul>
+<li><a class="reference external" href="#installing-from-source">Installing from source</a></li>
 <li><a class="reference external" href="#installers-and-ms-windows">Installers and MS Windows</a></li>
 </ul>
 </li>
@@ -95,13 +97,13 @@
 <h1>Getting Crisk<a class="headerlink" href="#getting-crisk" title="Permalink to this headline">¶</a></h1>
 <p>Crisk right now is avaiable on source form only. You may:</p>
 <ul class="simple">
-<li><a class="reference external" href="http://github.com/coredump/crisk/zipball/master">Download a tarball</a></li>
-<li><a class="reference external" href="http://github.com/coredump/crisk/tarball/master">Download a zipfile</a></li>
+<li><a class="reference external" href="http://github.com/coredump/crisk/downloads">Download a tar or zip file from one of the tags (versions)</a></li>
 <li>Clone the git repository: <tt class="docutils literal"><span class="pre">$</span> <span class="pre">git</span> <span class="pre">clone</span> <span class="pre">git://github.com/coredump/crisk</span></tt></li>
 </ul>
+<p>The tagged commits have at least a little guarantee of being working, the master commit may be broken sometimes (but I try hard only to commit working stuff).</p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>Crisk depends on some other modules that are right now kinda hard to package. To get Crisk working you will need:</p>
+<p>Crisk depends on some python modules, to get Crisk working you will need:</p>
 <ul class="simple">
 <li>Matplotlib (0.98 or higher)</li>
 <li>Reportlab (2.2 or higher)</li>
@@ -111,6 +113,12 @@
 <li><a class="reference external" href="http://www.async.com.br/projects/kiwi/">Kiwi</a></li>
 </ul>
 <p>I suggest using your distribution packages when possible and <a class="reference external" href="http://peak.telecommunity.com/DevCenter/EasyInstall">easy_install</a> when everything else fails. Reportlab does not install correctly with <tt class="docutils literal"><span class="pre">easy_install</span></tt> so it is better do download and install from source.</p>
+<div class="section" id="installing-from-source">
+<h3>Installing from source<a class="headerlink" href="#installing-from-source" title="Permalink to this headline">¶</a></h3>
+<p>Crisk uses distutils to provide an easier install. <strong>Don&#8217;t try to install Crisk as an egg file</strong>. Use <tt class="docutils literal"><span class="pre">setup.py</span></tt> to install Crisk to the right place, on linux (Ubuntu 9.04 and Debian Lenny) I use:</p>
+<div class="highlight-python"><pre>$ sudo python setup.py install --root=/</pre>
+</div>
+</div>
 <div class="section" id="installers-and-ms-windows">
 <h3>Installers and MS Windows<a class="headerlink" href="#installers-and-ms-windows" title="Permalink to this headline">¶</a></h3>
 <p>Crisk runs perfectly on Microsoft Windows. Unfortunately I had some problems packaging the software with py2exe and decided to spend my time improving Crisk instead of dealing with neverending problems. So, you can install Python 2.5, install easy_install, install the dependencies above and Crisk will run find. I will eventually get around the py2exe errors, but don&#8217;t hold your breath.</p>
@@ -182,6 +190,7 @@
           <a href="screenshots.html" title="Screenshots and examples"
              accesskey="N">next</a> |</li>
         <li><a href="">Crisk v0.3 documentation</a> &raquo;</li>
+        <li><a href="http://core.lighthouseapp.com/projects/25415-crisk/">Issue Tracker</a> &raquo;</li>
       </ul>
     </div>
     <div class="footer">
