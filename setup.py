@@ -94,7 +94,7 @@ package_dir = {'crisk' : 'src/crisk',
                'crisk.reports' : 'src/crisk/reports'}
 
 scripts = [
-               'src/crisk.py'
+               'bin/crisk'
           ]
 
 setup(
