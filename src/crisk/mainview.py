@@ -174,7 +174,7 @@ class MainView(GladeDelegate):
         try:
             db_url = 'sqlite:///%s' % selected_file
             metadata.bind = db_url
-            metadata.bind.echo = True
+            metadata.bind.echo = False
             metadata.bind.has_table('model_asset')
             setup_all()
             self.db_file = selected_file
@@ -194,7 +194,7 @@ class MainView(GladeDelegate):
         try:
             db_url = 'sqlite:///%s' % new_file
             metadata.bind = db_url
-            metadata.bind.echo = True
+            metadata.bind.echo = False
             setup_all()
             create_all()
             tmp = Basic()

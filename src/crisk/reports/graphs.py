@@ -19,6 +19,10 @@
 #    along with Crisk.  If not, see <http://www.gnu.org/licenses/>.
 
 import gettext
+import matplotlib
+
+# Cairo pdf backend
+matplotlib.use('agg', False)
 
 from tempfile import NamedTemporaryFile
 from pylab import *

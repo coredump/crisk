@@ -21,10 +21,12 @@
 
 import os
 import sys
+import matplotlib
+import glob
+sys.path.append('./src')
+import crisk
 if os.name in ['win32', 'windows', 'nt']:
     import py2exe
-
-from glob import glob
 
 depends = ['geraldo', 'kiwi', 'elixir', 'reportlab', 'matplotlib', 'pygtk']
 
@@ -36,22 +38,45 @@ for mod in depends:
         
 from kiwi.dist import listfiles, listpackages, setup
 
-data_files = [
-    ('$datadir/pixmaps',
-     listfiles('pixmaps', '*.*')),
-    ('$datadir/glade',
-     listfiles('glade', '*.glade')),
-    ('share/locale/pt_BR/LC_MESSAGES', 
-      [ 'locale/pt_BR/LC_MESSAGES/crisk.mo' ] ),
-    ('share/doc/crisk', 
-      listfiles('docs', '*')),
-    ]
-
-global_resources = dict(
-    pixmaps='$datadir/pixmaps',
-    glade='$datadir/glade',
-    locale='share/locale/'
+if os.name in ['win32', 'windows', 'nt']:
+    data_files = [
+        ('pixmaps',
+         listfiles('pixmaps', '*.*')),
+        ('glade',
+         listfiles('glade', '*.glade')),
+        ('locale/pt_BR/LC_MESSAGES', 
+          [ 'locale/pt_BR/LC_MESSAGES/crisk.mo' ] ),
+        ('doc/crisk', 
+          listfiles('docs', '*')),
+        ]
+    
+#    data_files.append(mpl_datafiles)
+    data_files.extend(matplotlib.get_py2exe_datafiles())
+    
+    global_resources = dict(
+    pixmaps='pixmaps',
+    glade='glade',
+    locale='locale'
     )
+    
+else:
+    data_files = [
+        ('$datadir/pixmaps',
+         listfiles('pixmaps', '*.*')),
+        ('$datadir/glade',
+         listfiles('glade', '*.glade')),
+        ('share/locale/pt_BR/LC_MESSAGES', 
+          [ 'locale/pt_BR/LC_MESSAGES/crisk.mo' ] ),
+        ('share/doc/crisk', 
+          listfiles('docs', '*')),
+        ]
+
+    global_resources = dict(
+        pixmaps='$datadir/pixmaps',
+        glade='$datadir/glade',
+        locale='share/locale/'
+        )
+
 
 packages = ['crisk', 'crisk.reports']
 
@@ -63,16 +88,13 @@ scripts = [
           ]
 
 setup(
-    name = 'crisk',
-    description = 'Simple Risk Management Tool',
-    version = '0.3',
-    author = 'José de Paula E. Júnior (coredump)',
+    name = 'Crisk',
+    description = crisk.__shortdescription__,
+    version = crisk.__version__,
+    author = crisk.__author__,
     author_email = 'jose.junior@gmail.com',
-    long_description = """
-    Crisk is a simple tool for Risk Management, aimed at security officers,
-    security consultants and risk professionals.
-    """,
-    url = 'http://coredump.github.com/crisk',
+    long_description = crisk.__description__,
+    url = crisk.__url__,
     license = 'GNU GPLv3 (see COPYING)',
     
     packages = packages,
@@ -90,8 +112,16 @@ setup(
 
     options = {
                   'py2exe': {
-                      'packages':'encodings, crisk, sqlalchemy.databases.sqlite',
-                      'includes': 'cairo, pango, pangocairo, atk, gobject, geraldo, elixir, matplotlib',
+                      'packages' : ['encodings', 'crisk', 'sqlalchemy.databases.sqlite',
+                                    'locale', 'gettext'  
+                                   ],
+                      
+                      'includes': [ 'cairo', 'pango', 'pangocairo', 'atk', 'gobject', 
+                                   'geraldo', 'elixir', 'matplotlib', 'pytz', 'pylab', 
+                                   'matplotlib.numerix.random_array', 'matplotlib.backends',
+                                   'matplotlib.backends.backend_agg'
+                                   ]
+                      
                   }
               }
 )
