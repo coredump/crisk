@@ -16,7 +16,7 @@
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Crisk.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 :mod:`crisk.model`
@@ -46,6 +46,7 @@ class Asset(Entity):
     
     vulns = ManyToMany('Vulnerability', ondelete = 'cascade')
     owner = ManyToOne('Owner')
+    applied_controls = OneToMany('AppliedControl')
     
     def set_value(self, value):
         self.__value = int(value)
@@ -65,6 +66,7 @@ class Vulnerability(Entity):
     chance = Field(Numeric)
     assets = ManyToMany('Asset', ondelete = 'cascade')
     threats = ManyToMany('Threat', ondelete = 'cascade')
+    applied_controls = OneToMany('AppliedControl')
     
     def __get_total_risk(self):
         try:
@@ -91,3 +93,20 @@ class Owner(Entity):
     
     def __repr__(self):
         return self.name
+    
+class Control(Entity):
+    using_options(autosetup = True, tablename = 'control')
+    
+    ref = Field(Unicode(16))
+    description = Field(Unicode(256))
+    long_description = Field(UnicodeText)
+    
+    applied_controls = OneToMany('AppliedControl')
+    
+class AppliedControl(Entity):
+    using_options(autosetup = True, tablename = 'applied_controls')
+    
+    control = ManyToOne('Control')
+    asset = ManyToOne('Asset')
+    vuln = ManyToOne('Vulnerability')
+    status = Field(Numeric)
