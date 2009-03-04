@@ -50,6 +50,7 @@ from model import *
 from basicsview import BasicsView
 from inventoryview import InventoryView
 from vulnerabilitiesview import VulnerabilitiesView
+from controlsview import ControlsView
 
 _ = gettext.gettext
 
@@ -77,7 +78,7 @@ class MainView(GladeDelegate):
     db_file = None
 
     def __init__(self):
-
+        
         GladeDelegate.__init__(self, "ui", toplevel_name = 'MainWindow', 
                                delete_handler = self.on_exit__activate)        
         self.tree = self.get_widget('maintree')        
@@ -85,23 +86,27 @@ class MainView(GladeDelegate):
         cols =  [ Column('name', title=_('Step'), data_type = str, expand = True) ]
         tree.set_columns(cols)
         tree.set_headers_visible(False)
-        basics = tree.append(None, Step(_('Basic Data'), 0))
+        basics = tree.append(None, Step(_('Assessment'), 0))
         first = tree.append(basics, Step(_('Target Information'), 1))
         self.first = first
         tree.append(basics, Step(_('Inventory'), 2))
         tree.append(basics, Step(_('Vulnerabilities'), 3))
         tree.expand(basics)
-#        reports = tree.append(None, Step('Results', 4))
-#        self.first_report = tree.append(reports, Step('Inventory Report', 5))
-#        tree.expand(reports)
-#        tree.select(self.first)
+        controls = tree.append(None, Step(_('Treatment'), 4))
+        self.first_control = tree.append(controls, Step(_('Control Library'), 5))
+        tree.append(controls, Step(_('Applied Controls'), 5))
 
+        # Open or create a file before doing much
+        if self.db_file is None:
+            self.open_or_new()   
+        
+        tree.expand(controls)
+        tree.select(self.first)
         icon = environ.find_resource('pixmaps', 'criskicon.png')
         __window = self.get_widget('MainWindow')
         __window.set_icon_from_file(icon)
 
-        if self.db_file is None:
-            self.open_or_new()   
+
     
     def open_or_new(self):
         """
@@ -144,11 +149,11 @@ class MainView(GladeDelegate):
         if index == 3:
             slave = VulnerabilitiesView(parent = self)
             self.attach_slave('placeholder', slave)
-#        if index == 4:
-#            tree.select(self.first_report)
-#        if index == 5:
-#            slave = ReportView(parent = self, reptype = 'inventory')
-#           self.attach_slave('placeholder', slave)  
+        if index == 4:
+            tree.select(self.first_control)
+        if index == 5:
+            slave = ControlsView(parent = self)
+            self.attach_slave('placeholder', slave)  
                         
     def on_about__activate(self, *args):
         diag = gtk.AboutDialog()
